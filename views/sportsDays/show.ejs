@@ -5,55 +5,63 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <title>
         <%= day.name %>
     </title>
 </head>
 
 <body>
-    <h1>Show Page</h1>
-    <p>
-        <%= day.name %>
-    </p>
-    <div>
-        Events:
+    <main class="container mt-3">
+        <h1>
+            <%= day.name %>
+        </h1>
         <div>
-            <% for(let event of day.events) { %>
-                <a style="display:inline-block; text-decoration: none; color: inherit;"
-                    href="/sportsDays/<%= day._id %>/events/<%= event._id %>">
-                    <div style="border: 2px solid black; border-radius: 6px; display: inline-block;">
-                        <p>
-                            <%= event.name %>
-                        </p>
-                        Participants:
-                        <ul>
-                            <% for(let participant of event.participants) { %>
-                                <li>
-                                    <%= participant %>
-                                </li>
-                                <% } %>
-                        </ul>
+            <h3>Events:</h3>
+            <form action="/sportsDays/<%= day._id %>/events/new">
+                <button class="btn btn-primary">Add event</button>
+            </form>
+            <div class="row">
+                <% for(let event of day.events) { %>
+                    <div class="col-sm-6">
+                        <a class="text-decoration-none text-dark"
+                            href="/sportsDays/<%= day._id %>/events/<%= event._id %>">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <%= event.name %>
+                                    </h5>
+                                    <p class="card-text">Participants:
+                                    <ul>
+                                        <% for(let participant of event.participants) { %>
+                                            <li>
+                                                <%= participant %>
+                                            </li>
+                                            <% } %>
+                                    </ul>
+                                    </p>
+                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </a>
-                <% } %>
+                    <% } %>
+            </div>
         </div>
-    </div>
 
-    <form action="/sportsDays/<%= day._id %>/events/new">
-        <button>Add event</button>
-    </form>
+        <form action="/sportsDays/<%= day._id %>/edit">
+            <button class="btn btn-primary">Edit</button>
+        </form>
 
-    <form action="/sportsDays/<%= day._id %>/edit">
-        <button>Edit</button>
-    </form>
+        <form action="/sportsDays/<%= day._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-primary">Delete</button>
+        </form>
 
-    <form action="/sportsDays/<%= day._id %>?_method=DELETE" method="POST">
-        <button>Delete</button>
-    </form>
-
-    <form action="/sportsDays">
-        <button>All Sports Days</button>
-    </form>
+        <form action="/sportsDays">
+            <button class="btn btn-primary">All Sports Days</button>
+        </form>
+    </main>
 </body>
 
 </html>
