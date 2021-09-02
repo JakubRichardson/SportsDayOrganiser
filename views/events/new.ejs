@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Event</title>
+</head>
+
+<body>
+    <h1>Add a new event to: <%= day.name %>
+    </h1>
+    <form action="/sportsDays/<%= day._id %>/events" method="POST">
+        <input type="text" name="event" placeholder="Event name">
+        <button>Add</button>
+    </form>
+
+    <form action="/sportsDays/<%= day._id %>">
+        <button>Back to Sports Day</button>
+    </form>
+
+</body>
+
+</html>

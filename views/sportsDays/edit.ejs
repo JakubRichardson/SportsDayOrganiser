@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Sports Day</title>
+</head>
+
+<body>
+    <h1>Edit Sports Day</h1>
+    <form action="/sportsDays/<%= day._id %>?_method=PUT" method="POST">
+        <input type="text" name="name" placeholder="Sports day name" value="<%= day.name %>">
+        <button>Submit</button>
+    </form>
+
+    <form action="/sportsDays/<%= day._id %>">
+        <button>Back to Sports Day</button>
+    </form>
+</body>
+
+</html>

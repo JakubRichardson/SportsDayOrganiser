@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Sports Days</title>
+</head>
+
+<body>
+    <h1>All Sports Days</h1>
+    <ul>
+        <% for(let day of sportsDays) { %>
+            <li><a href="/sportsDays/<%= day._id %>">
+                    <%= day.name %>
+                </a></li>
+            <% } %>
+    </ul>
+
+    <form action="/sportsDays/new">
+        <button>New Sports Day</button>
+    </form>
+
+</body>
+
+</html>

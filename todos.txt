@@ -1,0 +1,2 @@
+Add flash
+Remove inline styling on show page

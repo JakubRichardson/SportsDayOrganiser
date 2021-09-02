@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event show page</title>
+</head>
+
+<body>
+    <h1>Event Show Page</h1>
+    <p>
+        <%= day.name %>
+    </p>
+    <div>
+        <%= event.name %>
+            <div>
+                Participants:
+                <ul>
+
+                    <% for(let participant of event.participants) { %>
+                        <li>
+                            <%= participant %>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+    </div>
+
+    <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>/join" method="POST">
+        <label for="name">Sign Up:</label>
+        <input type="text" name="name" id="name" placeholder="Enter your name">
+        <button>Sign Up</button>
+    </form>
+
+    <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE" method="POST">
+        <button>Delete Event</button>
+    </form>
+
+    <form action="/sportsDays/<%= day._id %>">
+        <button>All events</button>
+    </form>
+
+</body>
+
+</html>
