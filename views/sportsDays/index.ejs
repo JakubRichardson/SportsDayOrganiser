@@ -1,27 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("layouts/boilerplate") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Sports Days</title>
-</head>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <h1>All Sports Days</h1>
+        </div>
+        <div class="col-md-6 mb-3 d-flex align-items-center">
+            <a class="btn btn-success btn-lg" href="/sportsDays/new">New Sports Day</a>
+        </div>
+    </div>
 
-<body>
-    <h1>All Sports Days</h1>
-    <ul>
+    <div class="row">
         <% for(let day of sportsDays) { %>
-            <li><a href="/sportsDays/<%= day._id %>">
-                    <%= day.name %>
-                </a></li>
+            <div class="col-sm-6 mb-3">
+                <a class="text-decoration-none text-reset" href="/sportsDays/<%=day._id %>">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= day.name %>
+                            </h5>
+                            <p class="card-text">
+                                <% if(day.events.length> 0) { %>
+                                    <p class="card-text">Events - <%= day.events.length %>: </p>
+                                    <ul>
+                                        <% for(let event of day.events) { %>
+                                            <li>
+                                                <%= event.name %>
+                                            </li>
+                                            <% } %>
+                                    </ul>
+                                    <% } else { %>
+                                        <p class="card-text">No events yet!</p>
+                                        <% } %>
+                                            <!-- <button class="btn btn-primary">Sign up</button> -->
+                            </p>
+                            <div class="row">
+                                <form class="col-auto" action="/sportsDays/<%= day._id %>/edit">
+                                    <button class="btn btn-warning">Edit</button>
+                                </form>
+
+                                <form class="col-auto" action="/sportsDays/<%= day._id %>?_method=DELETE" method="POST">
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
             <% } %>
-    </ul>
-
-    <form action="/sportsDays/new">
-        <button>New Sports Day</button>
-    </form>
-
-</body>
-
-</html>
+    </div>

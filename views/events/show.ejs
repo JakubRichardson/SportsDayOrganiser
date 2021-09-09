@@ -1,47 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("layouts/boilerplate") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event show page</title>
-</head>
-
-<body>
-    <h1>Event Show Page</h1>
-    <p>
+    <h1>
         <%= day.name %>
-    </p>
+    </h1>
+    <h3>
+        Event: <%= event.name %>
+    </h3>
     <div>
-        <%= event.name %>
-            <div>
-                Participants:
-                <ul>
-
-                    <% for(let participant of event.participants) { %>
-                        <li>
-                            <%= participant %>
-                        </li>
-                        <% } %>
-                </ul>
-            </div>
+        <% if(event.participants.length> 0) { %>
+            <h4 class="card-text">Participants - <%= event.participants.length %>: </h4>
+            <ul>
+                <% for(let participant of event.participants) { %>
+                    <li>
+                        <%= participant %>
+                    </li>
+                    <% } %>
+            </ul>
+            <% } else { %>
+                <p class="card-text">No participants yet!</p>
+                <% } %>
     </div>
 
-    <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>/join" method="POST">
-        <label for="name">Sign Up:</label>
-        <input type="text" name="name" id="name" placeholder="Enter your name">
-        <button>Sign Up</button>
+    <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>/join" method="POST" novalidate
+        class="validated-form">
+        <h4>Sign up:</h4>
+        <div class="mb-3">
+            <label class="form-label" for="name">Name</label>
+            <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name" required>
+            <div class="valid-feedback">Looks Good!</div>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-success">Sign Up</button>
+        </div>
     </form>
 
-    <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE" method="POST">
-        <button>Delete Event</button>
-    </form>
+    <div class="row">
+        <form class="col-auto" action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Delete Event</button>
+        </form>
 
-    <form action="/sportsDays/<%= day._id %>">
-        <button>All events</button>
-    </form>
-
-</body>
-
-</html>
+        <form class="col-auto" action="/sportsDays/<%= day._id %>">
+            <button class="btn btn-primary">Back to <%= day.name %></button>
+        </form>
+    </div>

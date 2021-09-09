@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("layouts/boilerplate") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Sports Day</title>
-</head>
-
-<body>
-    <h1>Add a new Sports Day</h1>
-    <form action="/sportsDays" method="POST">
-        <input type="text" name="name" placeholder="Sports day name">
-        <button>Add</button>
+    <h1>New Sports Day</h1>
+    <form action="/sportsDays" method="POST" novalidate class="validated-form">
+        <div class="mb-3">
+            <label class="form-label" for="title">Title</label>
+            <input class="form-control" type="text" name="name" id="title" placeholder="Sports day name" required>
+            <div class="valid-feedback">Looks Good!</div>
+        </div>
+        <button class="btn btn-success">Add Sports Day</button>
     </form>
-
-</body>
-
-</html>
