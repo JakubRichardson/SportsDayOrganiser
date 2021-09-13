@@ -1,2 +1,7 @@
 Add flash
 Remove inline styling on show page
+list groups with more
+implement event sort
+
+used:
+https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd

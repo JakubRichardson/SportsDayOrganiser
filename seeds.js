@@ -13,22 +13,30 @@ mongoose.connect("mongodb://localhost:27017/sportsApp", {
     })
 
 const seedEvents = [
-    { name: "Javelin", participants: ["John", "Julie"] },
-    { name: "400m", participants: ["Pablo", "Picasso"] }
+    { name: "Javelin", gender: "Male", participants: ["John", "Julie"] },
+    { name: "400m", gender: "Female", participants: ["Pablo", "Picasso"] }
 ];
 
 const seedSportsDays = [
     {
-        name: "Y11 sports day"
+        name: "Y11 sports day",
+        year: "11",
+        date: "2021-09-17"
     },
     {
-        name: "Y2 sports day"
+        name: "Y2 sports day",
+        year: "2",
+        date: "2022-10-17"
     },
     {
-        name: "Y3 sports day"
+        name: "Y3 sports day",
+        year: "3",
+        date: "2022-10-20"
     },
     {
-        name: "Y4 sports day"
+        name: "Y4 sports day",
+        year: "4",
+        date: "2022-10-17"
     }
 ];
 

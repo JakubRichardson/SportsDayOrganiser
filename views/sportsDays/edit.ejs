@@ -1,11 +1,24 @@
 <% layout("layouts/boilerplate") %>
 
     <h1>Edit Sports Day</h1>
-    <form action="/sportsDays/<%= day._id %>?_method=PUT" method="POST">
+    <form action="/sportsDays/<%= day._id %>?_method=PUT" method="POST" novalidate class="validated-form row">
         <div class="mb-3">
             <label class="form-label" for="title">Title</label>
             <input class="form-control" type="text" name="name" id="title" placeholder="Sports day name"
-                value="<%= day.name %>">
+                value="<%= day.name %>" required>
+            <div class="valid-feedback">Looks Good!</div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label" for="year">Year Group (1 to 13)</label>
+            <input class="form-control" type="number" name="year" id="year" placeholder="Year Group" min="1" max="13"
+                value="<%= day.year %>" required>
+            <div class="valid-feedback">Looks Good!</div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label" for="date">Date</label>
+            <input class="form-control" type="date" name="date" id="date"
+                value="<%= day.date.toISOString().split('T')[0] %>" required>
+            <div class="valid-feedback">Looks Good!</div>
         </div>
         <div class="mb-3">
             <button class="btn btn-info">Submit</button>

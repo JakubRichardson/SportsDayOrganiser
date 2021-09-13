@@ -5,7 +5,16 @@
     <form action="/sportsDays/<%= day._id %>/events" method="POST" novalidate class="validated-form">
         <div class="mb-3">
             <label class="form-label" for="event">Event name</label>
-            <input class="form-control" type="text" name="event" id="event" placeholder="Event name">
+            <input class="form-control" type="text" name="event" id="event" placeholder="Event name" required>
+            <div class="valid-feedback">Looks Good!</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="Gender">Gender</label>
+            <select name="gender" class="form-select form-select-md" aria-label=".form-select-sm example" required>
+                <option value="Male" selected>Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
             <div class="valid-feedback">Looks Good!</div>
         </div>
         <div class="mb-3"><button class="btn btn-success">Add Event</button></div>

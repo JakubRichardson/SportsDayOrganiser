@@ -1,11 +1,24 @@
 <% layout("layouts/boilerplate") %>
 
     <h1>New Sports Day</h1>
-    <form action="/sportsDays" method="POST" novalidate class="validated-form">
+    <form action="/sportsDays" method="POST" novalidate class="validated-form row">
         <div class="mb-3">
             <label class="form-label" for="title">Title</label>
             <input class="form-control" type="text" name="name" id="title" placeholder="Sports day name" required>
             <div class="valid-feedback">Looks Good!</div>
         </div>
-        <button class="btn btn-success">Add Sports Day</button>
+        <div class="col-md-6 mb-3">
+            <label class="form-label" for="year">Year Group (1 to 13)</label>
+            <input class="form-control" type="number" name="year" id="year" placeholder="Year Group" min="1" max="13"
+                required>
+            <div class="valid-feedback">Looks Good!</div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label" for="date">Date</label>
+            <input class="form-control" type="date" name="date" id="date" required>
+            <div class="valid-feedback">Looks Good!</div>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-success">Add Sports Day</button>
+        </div>
     </form>

@@ -6,6 +6,16 @@ const sportsDaySchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    year: {
+        type: Number,
+        max: 13,
+        min: 1,
+        required: true
+    },
+    date: {
+        type: Date,
+        required: true
+    },
     events: [
         {
             type: Schema.Types.ObjectId,

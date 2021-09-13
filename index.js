@@ -80,7 +80,7 @@ app.get("/sportsDays/:id/events/new", async (req, res) => {
 app.post("/sportsDays/:id/events", async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findById(id);
-    const newEvent = new Event({ name: req.body.event });
+    const newEvent = new Event({ name: req.body.event, gender: req.body.gender });
     await newEvent.save();
     sportsDay.events.push(newEvent);
     await sportsDay.save();

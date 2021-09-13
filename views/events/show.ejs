@@ -3,9 +3,14 @@
     <h1>
         <%= day.name %>
     </h1>
-    <h3>
-        Event: <%= event.name %>
-    </h3>
+    <div class="row">
+        <h3 class="col-md-4">
+            Event: <%= event.name %>
+        </h3>
+        <h4 class="col-md-8">
+            Gender: <%= event.gender %>
+        </h4>
+    </div>
     <div>
         <% if(event.participants.length> 0) { %>
             <h4 class="card-text">Participants - <%= event.participants.length %>: </h4>

@@ -3,59 +3,82 @@
     <h1>
         <%= day.name %>
     </h1>
-    <div>
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <h3>Events:</h3>
-            </div>
-            <div class="col-md-6 mb-3 d-flex align-items-center">
-                <a class="btn btn-success" href="/sportsDays/<%= day._id %>/events/new">New Event</a>
+    <div class="row">
+        <h5 class="col-md-6">
+            Year: <%= day.year %>
+        </h5>
+        <h5 class="col-md-6">
+            Date: <%= day.date.toDateString() %>
+        </h5>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="row">
+                <h3 class="col">Events - <%= day.events.length %>:</h3>
+                <div class="btn-group col" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="eventSort" id="all" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="all">All</label>
+                    <input type="radio" class="btn-check" name="eventSort" id="male" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="male">Male</label>
+                    <input type="radio" class="btn-check" name="eventSort" id="female" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="female">Female</label>
+                    <input type="radio" class="btn-check" name="eventSort" id="other" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="other">Other</label>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <% if(day.events.length> 0) { %>
-                <% for(let event of day.events) { %>
-                    <div class="col-md-6 mb-3">
-                        <a class="text-decoration-none text-reset"
-                            href="/sportsDays/<%= day._id %>/events/<%= event._id %>">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">
+        <div class="col-md-6 mb-3 d-flex align-items-center">
+            <a class="btn btn-success" href="/sportsDays/<%= day._id %>/events/new">New Event</a>
+        </div>
+    </div>
+    <div class="row">
+        <% if(day.events.length> 0) { %>
+            <% for(let event of day.events) { %>
+                <div class="col-md-6 mb-3">
+                    <a class="text-decoration-none text-reset"
+                        href="/sportsDays/<%= day._id %>/events/<%= event._id %>">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <h5 class="card-title col-md-6">
                                         <%= event.name %>
                                     </h5>
-                                    <% if(event.participants.length> 0) { %>
-                                        <p class="card-text">Participants - <%= event.participants.length %>:
-                                        </p>
-                                        <ul>
-                                            <% for(let participant of event.participants) { %>
-                                                <li>
-                                                    <%= participant %>
-                                                </li>
-                                                <% } %>
-                                        </ul>
-                                        <% } else { %>
-                                            <p class="card-text">No participants yet!</p>
-                                            <% } %>
-                                                <div class="row">
-                                                    <form class="col-auto"
-                                                        action="/sportsDays/<%= day._id %>/events/<%= event._id %>">
-                                                        <button class="btn btn-primary">Sign up</button>
-                                                    </form>
-                                                    <form class="col-auto"
-                                                        action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE"
-                                                        method="POST">
-                                                        <button class="btn btn-danger">Delete Event</button>
-                                                    </form>
-                                                </div>
+                                    <div class="col-md-6 text-md-end">
+                                        <%= event.gender %>
+                                    </div>
                                 </div>
+                                <% if(event.participants.length> 0) { %>
+                                    <p class="card-text">Participants - <%= event.participants.length %>:
+                                    </p>
+                                    <ul>
+                                        <% for(let participant of event.participants) { %>
+                                            <li>
+                                                <%= participant %>
+                                            </li>
+                                            <% } %>
+                                    </ul>
+                                    <% } else { %>
+                                        <p class="card-text">No participants yet!</p>
+                                        <% } %>
+                                            <div class="row">
+                                                <form class="col-auto"
+                                                    action="/sportsDays/<%= day._id %>/events/<%= event._id %>">
+                                                    <button class="btn btn-primary">Sign up</button>
+                                                </form>
+                                                <form class="col-auto"
+                                                    action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE"
+                                                    method="POST">
+                                                    <button class="btn btn-danger">Delete Event</button>
+                                                </form>
+                                            </div>
                             </div>
-                        </a>
-                    </div>
-                    <% } %>
-                        <% } else { %>
-                            <div class="mb-3 fs-2">No Events yet!</div>
-                            <% } %>
-        </div>
+                        </div>
+                    </a>
+                </div>
+                <% } %>
+                    <% } else { %>
+                        <div class="mb-3 fs-2">No Events yet!</div>
+                        <% } %>
     </div>
 
     <div class="row">
