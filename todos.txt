@@ -1,7 +1,18 @@
 Add flash
 Remove inline styling on show page
-list groups with more
+list groups with more - can use table
 implement event sort
+change event model to require lowercase gender
+
+implementing template events:
+
+1. create file with template events
+2. on new form add ejs to render all template events
+3. add id to each name
+4. new route
+
+extensions:
+print a list of students signed up for events
 
 used:
 https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd

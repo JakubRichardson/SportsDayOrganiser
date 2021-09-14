@@ -4,6 +4,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
+const templates = require("./templateEvents")
 
 const SportsDay = require("./models/sportsDay");
 const Event = require("./models/event");
@@ -36,11 +37,22 @@ app.get("/sportsDays", async (req, res) => {
 })
 
 app.get("/sportsDays/new", (req, res) => {
-    res.render("sportsDays/new");
+    res.render("sportsDays/new", { templates });
 })
 
 app.post("/sportsDays", async (req, res) => {
-    const newSportsDay = new SportsDay(req.body);
+    console.log(req.body)
+    const newSportsDay = new SportsDay({ name: req.body.name, year: req.body.year, date: req.body.date });
+    for (id in req.body.events) {
+        const template = templates.find(obj => obj.id === id);
+        if (template) {
+            for (gender of req.body.events[id]) {
+                const event = new Event({ name: template.name, gender });
+                await event.save();
+                newSportsDay.events.push(event);
+            }
+        }
+    }
     await newSportsDay.save();
     res.redirect(`/sportsDays/${newSportsDay._id}`);
 })
