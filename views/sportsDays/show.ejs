@@ -16,13 +16,16 @@
             <div class="row">
                 <h3 class="col">Events - <%= day.events.length %>:</h3>
                 <div class="btn-group col" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="eventSort" id="all" autocomplete="off" checked>
+                    <input type="radio" class="btn-check" name="eventSort" id="all" autocomplete="off" data-all-radio
+                        checked>
                     <label class="btn btn-outline-primary" for="all">All</label>
-                    <input type="radio" class="btn-check" name="eventSort" id="male" autocomplete="off">
+                    <input type="radio" class="btn-check" name="eventSort" id="male" data-male-radio autocomplete="off">
                     <label class="btn btn-outline-primary" for="male">Male</label>
-                    <input type="radio" class="btn-check" name="eventSort" id="female" autocomplete="off">
+                    <input type="radio" class="btn-check" name="eventSort" id="female" data-female-radio
+                        autocomplete="off">
                     <label class="btn btn-outline-primary" for="female">Female</label>
-                    <input type="radio" class="btn-check" name="eventSort" id="other" autocomplete="off">
+                    <input type="radio" class="btn-check" name="eventSort" id="other" data-other-radio
+                        autocomplete="off">
                     <label class="btn btn-outline-primary" for="other">Other</label>
                 </div>
             </div>
@@ -34,7 +37,7 @@
     <div class="row">
         <% if(day.events.length> 0) { %>
             <% for(let event of day.events) { %>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-3" data-card-container data-card-gender="<%= event.gender.toLowerCase() %>">
                     <a class="text-decoration-none text-reset"
                         href="/sportsDays/<%= day._id %>/events/<%= event._id %>">
                         <div class="card">
@@ -81,7 +84,7 @@
                         <% } %>
     </div>
 
-    <div class="row">
+    <div class="row mb-3">
         <form class="col-auto" action="/sportsDays/<%= day._id %>/edit">
             <button class="btn btn-warning">Edit</button>
         </form>
@@ -94,3 +97,28 @@
             <button class="btn btn-primary">All Sports Days</button>
         </form>
     </div>
+
+    <script>
+        const cards = document.querySelectorAll("[data-card-container]");
+        const allRadioButton = document.querySelector("[data-all-radio]");
+        allRadioButton.addEventListener("change", function () {
+            for (card of cards) {
+                card.style.display = "block";
+            }
+        })
+        const filterCallback = word => {
+            return () => {
+                for (card of cards) {
+                    if (card.getAttribute("data-card-gender") === word) {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = "none";
+                    }
+                }
+            }
+        }
+        const maleRadioButton = document.querySelector("[data-male-radio]");
+        maleRadioButton.addEventListener("change", filterCallback("male"));
+        const femaleRadioButton = document.querySelector("[data-female-radio]");
+        femaleRadioButton.addEventListener("change", filterCallback("female"));
+    </script>

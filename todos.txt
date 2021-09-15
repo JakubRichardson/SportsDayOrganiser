@@ -1,8 +1,9 @@
 Add flash
-Remove inline styling on show page
 list groups with more - can use table
 implement event sort
 change event model to require lowercase gender
+remove other gender
+move scripts on new and show pages into separate files
 
 implementing template events:
 

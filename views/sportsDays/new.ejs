@@ -27,44 +27,48 @@
                             <th scope="col">Event</th>
                             <th scope="col">Gender</th>
                             <th scope="col"></th>
-                            <th scope="col"></th>
+                            <th scope="col">
+                                <input class="form-check-input" type="checkbox" id="allEvents">
+                                <label class="form-check-label" for="allEvents">
+                                    Select All Events
+                                </label>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% for(event of templates) { %>
+                        <% let i=0; for(event of templates) { %>
                             <tr>
                                 <td>
                                     <%= event.name %>
                                 </td>
                                 <td>
                                     <div class="form-check col">
-                                        <input class="form-check-input" type="checkbox" value="Female" id="male"
+                                        <input class="form-check-input" type="checkbox" value="Female" id="male<%= i %>"
                                             name="events[<%= event.id %>][]">
-                                        <label class="form-check-label" for="flexCheckDefault">
+                                        <label class="form-check-label" for="male<%= i %>">
                                             Male
                                         </label>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-check col">
-                                        <input class="form-check-input" type="checkbox" value="Male" id="female"
+                                        <input class="form-check-input" type="checkbox" value="Male" id="female<%= i %>"
                                             name="events[<%= event.id %>][]">
-                                        <label class="form-check-label" for="flexCheckChecked">
+                                        <label class="form-check-label" for="female<%= i %>">
                                             Female
                                         </label>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-check col">
-                                        <input class="form-check-input" type="checkbox" value="Other" id="other"
-                                            name="events[<%= event.id %>][]">
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            Other
+                                        <input class="form-check-input" type="checkbox" id="all<%= i %>">
+                                        <label class="form-check-label" for="all<%= i %>">
+                                            Select All
                                         </label>
                                     </div>
                                 </td>
                             </tr>
-                            <% } %>
+                            <% i++; } %>
                     </tbody>
                 </table>
             </div>
@@ -73,3 +77,25 @@
             <button class="btn btn-success">Add Sports Day</button>
         </div>
     </form>
+
+    <script>
+        const tableRows = document.querySelectorAll("tbody > tr");
+        const allCheckboxes = [];
+        for (let tr of tableRows) {
+            const checkboxes = Array.from(tr.querySelectorAll("input[type='checkbox']"));
+            allCheckboxes.push(...checkboxes);
+            if (checkboxes.length > 2) {
+                const selectAllCheckbox = checkboxes[checkboxes.length - 1];
+                const toggler = selectAll(selectAllCheckbox, checkboxes.splice(0, checkboxes.length - 1))
+                selectAllCheckbox.onclick = toggler;
+            }
+        }
+
+        const selectAllEventsCheckbox = document.querySelector("thead input[type='checkbox']");
+        const toggler = selectAll(selectAllEventsCheckbox, allCheckboxes);
+        selectAllEventsCheckbox.onclick = toggler;
+
+        function selectAll(selectAllCheck, checkBoxes) {
+            return () => checkBoxes.forEach(check => check.checked = selectAllCheck.checked);
+        }
+    </script>

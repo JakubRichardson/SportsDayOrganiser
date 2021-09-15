@@ -41,7 +41,6 @@ app.get("/sportsDays/new", (req, res) => {
 })
 
 app.post("/sportsDays", async (req, res) => {
-    console.log(req.body)
     const newSportsDay = new SportsDay({ name: req.body.name, year: req.body.year, date: req.body.date });
     for (id in req.body.events) {
         const template = templates.find(obj => obj.id === id);
@@ -85,7 +84,7 @@ app.delete("/sportsDays/:id", async (req, res) => {
 app.get("/sportsDays/:id/events/new", async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findById(id);
-    res.render("events/new", { day: sportsDay });
+    res.render("events/new", { day: sportsDay, templates });
 })
 
 
@@ -132,6 +131,10 @@ app.post("/sportsDays/:id/events/:eventId/join", async (req, res) => {
     // req.flash("success", "Successfully signed up!");
 
     res.redirect(`/sportsDays/${id}/events/${eventId}`);
+})
+
+app.get("/test", async (req, res) => {
+    res.render("sportsDays/showFiltering")
 })
 
 app.listen(3000, () => {
