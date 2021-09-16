@@ -14,10 +14,20 @@
     <div>
         <% if(event.participants.length> 0) { %>
             <h4 class="card-text">Participants - <%= event.participants.length %>: </h4>
-            <ul>
+            <ul class="list-group mb-2">
                 <% for(let participant of event.participants) { %>
-                    <li>
-                        <%= participant %>
+                    <li class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
+                        <div class="m-2 m-md-0">
+                            Name: <%= participant.name %>
+                        </div>
+                        <div class="m-2 m-md-0">
+                            House: <%= participant.house %>
+                        </div>
+                        <form
+                            action="/sportsDays/<%= day._id %>/events/<%= event._id %>/<%= participant._id %>?_method=DELETE"
+                            method="POST" class="m-2 m-md-0">
+                            <button class="btn btn-danger btn-sm ml-auto">Remove</button>
+                        </form>
                     </li>
                     <% } %>
             </ul>
@@ -29,10 +39,22 @@
     <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>/join" method="POST" novalidate
         class="validated-form">
         <h4>Sign up:</h4>
-        <div class="mb-3">
-            <label class="form-label" for="name">Name</label>
-            <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name" required>
-            <div class="valid-feedback">Looks Good!</div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label" for="name">Name</label>
+                <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name" required>
+                <div class="valid-feedback">Looks Good!</div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label" for="Gender">House</label>
+                <select name="house" class="form-select form-select-md" aria-label=".form-select-sm example" required>
+                    <option value="Bison" selected>Bison</option>
+                    <option value="Wolf">Wolf</option>
+                    <option value="Bear">Bear</option>
+                    <option value="Lynx">Lynx</option>
+                </select>
+                <div class="valid-feedback">Looks Good!</div>
+            </div>
         </div>
         <div class="mb-3">
             <button class="btn btn-success">Sign Up</button>

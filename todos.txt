@@ -4,6 +4,8 @@ implement event sort
 change event model to require lowercase gender
 remove other gender
 move scripts on new and show pages into separate files
+when deleting remove all array aswell
+make show more on lists
 
 implementing template events:
 

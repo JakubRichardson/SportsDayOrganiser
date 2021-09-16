@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const eventSchema = new mongoose.Schema({
     name: {
@@ -10,7 +11,10 @@ const eventSchema = new mongoose.Schema({
         enum: ["Male", "Female", "Other"],
         required: true
     },
-    participants: [String]
+    participants: [{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }]
 })
 
 

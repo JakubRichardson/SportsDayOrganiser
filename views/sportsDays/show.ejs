@@ -24,9 +24,6 @@
                     <input type="radio" class="btn-check" name="eventSort" id="female" data-female-radio
                         autocomplete="off">
                     <label class="btn btn-outline-primary" for="female">Female</label>
-                    <input type="radio" class="btn-check" name="eventSort" id="other" data-other-radio
-                        autocomplete="off">
-                    <label class="btn btn-outline-primary" for="other">Other</label>
                 </div>
             </div>
         </div>
@@ -51,12 +48,17 @@
                                     </div>
                                 </div>
                                 <% if(event.participants.length> 0) { %>
-                                    <p class="card-text">Participants - <%= event.participants.length %>:
-                                    </p>
-                                    <ul>
+                                    <p class="card-text">Participants - <%= event.participants.length %>:</p>
+                                    <ul class="list-group list-group-flush mb-2">
                                         <% for(let participant of event.participants) { %>
-                                            <li>
-                                                <%= participant %>
+                                            <li
+                                                class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
+                                                <div class="m-2 m-md-0">
+                                                    Name: <%= participant.name %>
+                                                </div>
+                                                <div class="m-2 m-md-0">
+                                                    House: <%= participant.house %>
+                                                </div>
                                             </li>
                                             <% } %>
                                     </ul>

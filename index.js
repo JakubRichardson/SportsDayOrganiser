@@ -8,6 +8,7 @@ const templates = require("./templateEvents")
 
 const SportsDay = require("./models/sportsDay");
 const Event = require("./models/event");
+const User = require("./models/user");
 
 mongoose.connect("mongodb://localhost:27017/sportsApp", {
     useNewUrlParser: true,
@@ -58,7 +59,13 @@ app.post("/sportsDays", async (req, res) => {
 
 app.get("/sportsDays/:id", async (req, res) => {
     const { id } = req.params;
-    const sportsDay = await SportsDay.findById(id).populate({ path: "events" });
+    const sportsDay = await SportsDay.findById(id).populate({
+        path: 'events',
+        populate: {
+            path: 'participants',
+            model: 'User'
+        }
+    })
     res.render("sportsDays/show", { day: sportsDay });
 })
 
@@ -106,13 +113,13 @@ app.post("/sportsDays/:id/events", async (req, res) => {
 app.get("/sportsDays/:id/events/:eventId", async (req, res) => {
     const { id, eventId } = req.params;
     const sportsDay = await SportsDay.findById(id);
-    const event = await Event.findById(eventId);
+    const event = await Event.findById(eventId).populate("participants");
     res.render("events/show", { day: sportsDay, event });
 })
 
 app.delete("/sportsDays/:id/events/:eventId", async (req, res) => {
     const { id, eventId } = req.params;
-    await SportsDay.findByIdAndUpdate({ _id: id }, { $pull: { events: eventId } })
+    await SportsDay.findByIdAndUpdate({ _id: id }, { $pull: { events: eventId } });
     await Event.findByIdAndDelete(req.params.eventId);
 
     // TODO
@@ -123,8 +130,24 @@ app.delete("/sportsDays/:id/events/:eventId", async (req, res) => {
 
 app.post("/sportsDays/:id/events/:eventId/join", async (req, res) => {
     const { id, eventId } = req.params;
+    const user = new User(req.body);
+    await user.save();
     const event = await Event.findById(eventId);
-    event.participants.push(req.body.name);
+    event.participants.push(user);
+    await event.save();
+
+    // TODO
+    // req.flash("success", "Successfully signed up!");
+
+    res.redirect(`/sportsDays/${id}/events/${eventId}`);
+})
+
+
+app.delete("/sportsDays/:id/events/:eventId/:userId", async (req, res) => {
+    const { id, eventId, userId } = req.params;
+    const event = await Event.findById(eventId);
+    const deletedUser = await User.findByIdAndDelete(userId);
+    event.participants.pull({ _id: deletedUser._id });
     await event.save();
 
     // TODO

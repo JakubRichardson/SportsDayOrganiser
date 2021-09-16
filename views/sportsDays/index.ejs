@@ -28,11 +28,14 @@
                             </div>
                             <p class="card-text">
                                 <% if(day.events.length> 0) { %>
-                                    <p class="card-text">Events - <%= day.events.length %>: </p>
-                                    <ul>
+                                    <p class="card-text mb-1">Events - <%= day.events.length %>: </p>
+                                    <ul class="list-group list-group-flush mb-2">
                                         <% for(let event of day.events) { %>
-                                            <li>
-                                                <%= event.name %>
+                                            <li
+                                                class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
+                                                <div class="m-2 m-md-0">
+                                                    <%= event.name %>
+                                                </div>
                                             </li>
                                             <% } %>
                                     </ul>
