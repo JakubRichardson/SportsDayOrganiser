@@ -3,6 +3,8 @@ const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
+const asyncWrapper = require("./utilities/asyncWrapper");
+const AppError = require("./utilities/AppError");
 // const flash = require("connect-flash");
 const methodOverride = require("method-override");
 
@@ -43,26 +45,27 @@ app.get("/", (req, res) => {
     res.redirect("/sportsDays");
 })
 
-app.get("/sportsDays", async (req, res) => {
+app.get("/sportsDays", asyncWrapper(async (req, res) => {
     const sportsDays = await SportsDay.find({}).populate({ path: "events" });
     res.render("sportsDays/index", { sportsDays });
-})
+}))
 
-app.get("/sportsDays/new", async (req, res) => {
+app.get("/sportsDays/new", asyncWrapper(async (req, res) => {
     const templates = await TemplateEvent.find({})
     res.render("sportsDays/new", { templates });
-})
+}))
 
 const validateSportsDay = (req, res, next) => {
     const { error } = sportsDaySchema.validate(req.body);
     if (error) {
-        res.send(error);
+        const text = error.details.map(ind => ind.message).join(", ");
+        throw new AppError(text, 400)
     } else {
         next();
     }
 }
 
-app.post("/sportsDays", validateSportsDay, async (req, res) => {
+app.post("/sportsDays", validateSportsDay, asyncWrapper(async (req, res) => {
     const newSportsDay = new SportsDay({ name: req.body.name, year: req.body.year, date: req.body.date });
     if (req.body.events) {
         if (req.body.events.male) {
@@ -88,9 +91,9 @@ app.post("/sportsDays", validateSportsDay, async (req, res) => {
     }
     await newSportsDay.save();
     res.redirect(`/sportsDays/${newSportsDay._id}`);
-})
+}))
 
-app.get("/sportsDays/:id", async (req, res) => {
+app.get("/sportsDays/:id", asyncWrapper(async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findById(id).populate({
         path: 'events',
@@ -100,42 +103,43 @@ app.get("/sportsDays/:id", async (req, res) => {
         }
     })
     res.render("sportsDays/show", { day: sportsDay });
-})
+}))
 
-app.get("/sportsDays/:id/edit", async (req, res) => {
+app.get("/sportsDays/:id/edit", asyncWrapper(async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findById(id);
     res.render("sportsDays/edit", { day: sportsDay });
-})
+}))
 
-app.put("/sportsDays/:id", async (req, res) => {
+app.put("/sportsDays/:id", asyncWrapper(async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
     res.redirect(`/sportsDays/${sportsDay._id}`);
-})
+}))
 
-app.delete("/sportsDays/:id", async (req, res) => {
+app.delete("/sportsDays/:id", asyncWrapper(async (req, res) => {
     const { id } = req.params;
     const deletedSportsDay = await SportsDay.findByIdAndDelete(id);
     res.redirect("/sportsDays");
-})
+}))
 
-app.get("/sportsDays/:id/events/new", async (req, res) => {
+app.get("/sportsDays/:id/events/new", asyncWrapper(async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findById(id);
     res.render("events/new", { day: sportsDay });
-})
+}))
 
 const validateEvent = (req, res, next) => {
     const { error } = eventSchema.validate(req.body);
     if (error) {
-        res.send(error);
+        const text = error.details.map(ind => ind.message).join(", ");
+        throw new AppError(text, 400)
     } else {
         next();
     }
 }
 
-app.post("/sportsDays/:id/events", validateEvent, async (req, res) => {
+app.post("/sportsDays/:id/events", validateEvent, asyncWrapper(async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findById(id);
     if (req.body.template && req.body.template === "true") {
@@ -151,17 +155,17 @@ app.post("/sportsDays/:id/events", validateEvent, async (req, res) => {
     // req.flash("success", "Created new review!");
 
     res.redirect(`/sportsDays/${sportsDay._id}`);
-})
+}))
 
 
-app.get("/sportsDays/:id/events/:eventId", async (req, res) => {
+app.get("/sportsDays/:id/events/:eventId", asyncWrapper(async (req, res) => {
     const { id, eventId } = req.params;
     const sportsDay = await SportsDay.findById(id);
     const event = await Event.findById(eventId).populate("participants");
     res.render("events/show", { day: sportsDay, event });
-})
+}))
 
-app.delete("/sportsDays/:id/events/:eventId", async (req, res) => {
+app.delete("/sportsDays/:id/events/:eventId", asyncWrapper(async (req, res) => {
     const { id, eventId } = req.params;
     await SportsDay.findByIdAndUpdate({ _id: id }, { $pull: { events: eventId } });
     await Event.findByIdAndDelete(req.params.eventId);
@@ -170,18 +174,19 @@ app.delete("/sportsDays/:id/events/:eventId", async (req, res) => {
     // req.flash("success", "Successfully deleted review!");
 
     res.redirect(`/sportsDays/${id}`);
-})
+}))
 
 const validateUser = (req, res, next) => {
     const { error } = userSchema.validate(req.body);
     if (error) {
-        res.send(error);
+        const text = error.details.map(ind => ind.message).join(", ");
+        throw new AppError(text, 400)
     } else {
         next();
     }
 }
 
-app.post("/sportsDays/:id/events/:eventId/join", validateUser, async (req, res) => {
+app.post("/sportsDays/:id/events/:eventId/join", validateUser, asyncWrapper(async (req, res) => {
     const { id, eventId } = req.params;
     const user = new User(req.body);
     await user.save();
@@ -193,10 +198,10 @@ app.post("/sportsDays/:id/events/:eventId/join", validateUser, async (req, res) 
     // req.flash("success", "Successfully signed up!");
 
     res.redirect(`/sportsDays/${id}/events/${eventId}`);
-})
+}))
 
 
-app.delete("/sportsDays/:id/events/:eventId/:userId", async (req, res) => {
+app.delete("/sportsDays/:id/events/:eventId/:userId", asyncWrapper(async (req, res) => {
     const { id, eventId, userId } = req.params;
     const event = await Event.findById(eventId);
     const deletedUser = await User.findByIdAndDelete(userId);
@@ -207,16 +212,25 @@ app.delete("/sportsDays/:id/events/:eventId/:userId", async (req, res) => {
     // req.flash("success", "Successfully signed up!");
 
     res.redirect(`/sportsDays/${id}/events/${eventId}`);
-})
+}))
 
-app.delete("/sportsDays/TemplateEvents/:id", async (req, res) => {
+app.delete("/sportsDays/TemplateEvents/:id", asyncWrapper(async (req, res) => {
     const { id } = req.params;
     await TemplateEvent.findByIdAndDelete(id);
     res.redirect(req.body.returnTo);
+}))
+
+app.get("/test", (req, res) => {
+    res.render("sportsDays/showFiltering")
 })
 
-app.get("/test", async (req, res) => {
-    res.render("sportsDays/showFiltering")
+app.all("*", (req, res, next) => {
+    next(new AppError("Page Not Found!", 404));
+})
+
+app.use((err, req, res, next) => {
+    const { text = "Oops, something went wrong", code = 500 } = err;
+    res.status(code).render("error", { text, code });
 })
 
 app.listen(3000, () => {

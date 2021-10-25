@@ -1,3 +1,4 @@
+error page and form errors
 + invalid validation
 validation id
 validation returnTo
@@ -45,6 +46,7 @@ Project requirements:
 
 
 Ask about login System
+Ask about participant limit
 Ask about icons for animals
 Ask about layout and permissions
 Dropdown or Radio?
