@@ -14,7 +14,9 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <div class="row">
-                <h3 class="col">Events - <%= day.events.length %>:</h3>
+                <h3 class="col">Events - <span data-num-events>
+                        <%= day.events.length %>
+                    </span>:</h3>
                 <div class="btn-group col" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="eventSort" id="all" autocomplete="off" data-all-radio
                         checked>
@@ -34,7 +36,7 @@
     <div class="row">
         <% if(day.events.length> 0) { %>
             <% for(let event of day.events) { %>
-                <div class="col-md-6 mb-3" data-card-container data-card-gender="<%= event.gender.toLowerCase() %>">
+                <div class="col-md-6 mb-3" data-card-container data-card-gender="<%= event.gender %>">
                     <a class="text-decoration-none text-reset"
                         href="/sportsDays/<%= day._id %>/events/<%= event._id %>">
                         <div class="card">
@@ -44,7 +46,7 @@
                                         <%= event.name %>
                                     </h5>
                                     <div class="col-md-6 text-md-end">
-                                        <%= event.gender %>
+                                        <%= event.gender[0].toUpperCase() + event.gender.slice(1) %>
                                     </div>
                                 </div>
                                 <% if(event.participants.length> 0) { %>
@@ -101,22 +103,27 @@
     </div>
 
     <script>
+        const numEvents = document.querySelector("[data-num-events]");
         const cards = document.querySelectorAll("[data-card-container]");
         const allRadioButton = document.querySelector("[data-all-radio]");
         allRadioButton.addEventListener("change", function () {
             for (card of cards) {
                 card.style.display = "block";
             }
+            numEvents.textContent = cards.length;
         })
         const filterCallback = word => {
             return () => {
+                let total = 0;
                 for (card of cards) {
                     if (card.getAttribute("data-card-gender") === word) {
                         card.style.display = "block";
+                        total++;
                     } else {
                         card.style.display = "none";
                     }
                 }
+                numEvents.textContent = total;
             }
         }
         const maleRadioButton = document.querySelector("[data-male-radio]");

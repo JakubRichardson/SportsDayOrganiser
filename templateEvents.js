@@ -1,4 +1,4 @@
-module.exports = [
+const events = [
     { id: "a0", name: "100m" },
     { id: "a1", name: "200m" },
     { id: "a2", name: "400m" },
@@ -11,3 +11,11 @@ module.exports = [
     { id: "a9", name: "High jump" },
     { id: "a10", name: "4x100m relay" }
 ]
+
+const keys = [];
+for (let obj of events) {
+    keys.push(obj.id)
+}
+
+module.exports.templates = events;
+module.exports.keys = keys;

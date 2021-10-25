@@ -32,7 +32,7 @@
                     <% } %>
             </ul>
             <% } else { %>
-                <p class="card-text">No participants yet!</p>
+                <div class="mb-3 fs-2">No participants yet!</div>
                 <% } %>
     </div>
 
@@ -43,17 +43,19 @@
             <div class="col-md-6 mb-3">
                 <label class="form-label" for="name">Name</label>
                 <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name" required>
-                <div class="valid-feedback">Looks Good!</div>
+                <div class="valid-feedback">All Good!</div>
+                <div class="invalid-feedback">Please choose a valid name.</div>
             </div>
             <div class="col-md-6 mb-3">
                 <label class="form-label" for="Gender">House</label>
                 <select name="house" class="form-select form-select-md" aria-label=".form-select-sm example" required>
-                    <option value="Bison" selected>Bison</option>
-                    <option value="Wolf">Wolf</option>
-                    <option value="Bear">Bear</option>
+                    <option value="Bear" selected>Bear</option>
+                    <option value="Bison">Bison</option>
                     <option value="Lynx">Lynx</option>
+                    <option value="Wolf">Wolf</option>
                 </select>
-                <div class="valid-feedback">Looks Good!</div>
+                <div class="valid-feedback">All Good!</div>
+                <div class="invalid-feedback">Please choose a valid house.</div>
             </div>
         </div>
         <div class="mb-3">

@@ -1,11 +1,20 @@
++ invalid validation
+validation id
+validation returnTo
+dissalow additional joi
+error handling
+custom add to template button
+Make Animal svgs
+?most popular in navbar
 Add flash
 list groups with more - can use table
 implement event sort
 change event model to require lowercase gender
-remove other gender
 move scripts on new and show pages into separate files
 when deleting remove all array aswell
 make show more on lists
+nicer scrollbar
+sanitation
 
 implementing template events:
 
@@ -19,3 +28,28 @@ print a list of students signed up for events
 
 used:
 https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
+validateForms.js file
+
+Project requirements:
+
+1. Create sports day
+2. Add, read, edit, and delete event info
+3. Persistent data
+4. Template events (100m, 200m, 400m, 800m, Javelin, Shot Put, Discus, Long jump, Triple jump, High jump, 4x100m relay- 4 runners per house)
+5. Be able to select viewing girls, boys, and all events
+6. Students able to sign up for events using name and house
+7. Form data is validated client-side and server side
+8. Login System so only teachers can delete events
+?9. print signed up for sports day
+9. Scoring pages for specific events
+
+
+Ask about login System
+Ask about icons for animals
+Ask about layout and permissions
+Dropdown or Radio?
+No numbers in names#
+max min on dates
+
+Meeting 10/21/2021 asking about year groups
+Refactor templateEvents as hard to validate

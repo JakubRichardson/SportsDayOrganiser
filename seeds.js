@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const SportsDay = require("./models/sportsDay");
 const Event = require("./models/event");
+const TemplateEvent = require("./models/tempEvent");
 const User = require("./models/user")
 
 mongoose.connect("mongodb://localhost:27017/sportsApp", {
@@ -20,8 +21,8 @@ const seedUsers = [
 ]
 
 const seedEvents = [
-    { name: "Javelin", gender: "Male" },
-    { name: "400m", gender: "Female" }
+    { name: "Javelin", gender: "male" },
+    { name: "400m", gender: "female" }
 ];
 
 const seedSportsDays = [
@@ -47,9 +48,22 @@ const seedSportsDays = [
     }
 ];
 
+const templateEvents = [
+    { name: "100m" },
+    { name: "200m" },
+    { name: "400m" },
+    { name: "800m" },
+    { name: "Javelin" },
+    { name: "Shot Put" },
+    { name: "Discus" },
+    { name: "Long jump" },
+    { name: "Triple jump" },
+    { name: "High jump" },
+    { name: "4x100m relay" }
+]
+
 const seedDB = async () => {
-    await SportsDay.deleteMany({});
-    await Event.deleteMany({});
+    await SportsDay.deleteMany({}); // removes all nested with middleware
     for (let day of seedSportsDays) {
         const sportsDay = new SportsDay(day);
         for (let event of seedEvents) {
@@ -64,6 +78,8 @@ const seedDB = async () => {
         }
         await sportsDay.save();
     }
+    await TemplateEvent.deleteMany({});
+    TemplateEvent.insertMany(templateEvents);
 }
 
 seedDB().then(() => {

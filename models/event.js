@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const User = require("./user");
 
-const eventSchema = new mongoose.Schema({
+const EventSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
     },
     gender: {
         type: String,
-        enum: ["Male", "Female", "Other"],
+        enum: ["male", "female"],
         required: true
     },
     participants: [{
@@ -17,5 +18,14 @@ const eventSchema = new mongoose.Schema({
     }]
 })
 
+EventSchema.post("findOneAndDelete", async function (document) {
+    if (document) {
+        await User.deleteMany({
+            _id: {
+                $in: document.participants
+            }
+        })
+    }
+})
 
-module.exports = mongoose.model("Event", eventSchema);
+module.exports = mongoose.model("Event", EventSchema);

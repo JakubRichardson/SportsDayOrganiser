@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Event = require("./event");
 
-const sportsDaySchema = new mongoose.Schema({
+const SportsDaySchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -24,5 +25,13 @@ const sportsDaySchema = new mongoose.Schema({
     ]
 })
 
+SportsDaySchema.post("findOneAndDelete", async function (document) {
+    if (document) {
+        for (let event of document.events) {
+            await Event.findByIdAndDelete(event);
+        }
+    }
+})
 
-module.exports = mongoose.model("SportsDay", sportsDaySchema);
+
+module.exports = mongoose.model("SportsDay", SportsDaySchema);

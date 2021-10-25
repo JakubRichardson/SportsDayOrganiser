@@ -3,12 +3,15 @@ const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
+// const flash = require("connect-flash");
 const methodOverride = require("method-override");
-const templates = require("./templateEvents")
 
 const SportsDay = require("./models/sportsDay");
 const Event = require("./models/event");
+const TemplateEvent = require("./models/tempEvent");
 const User = require("./models/user");
+
+const { sportsDaySchema, eventSchema, userSchema } = require("./schemas.js"); //TODO remove me
 
 mongoose.connect("mongodb://localhost:27017/sportsApp", {
     useNewUrlParser: true,
@@ -28,6 +31,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
+// app.use(flash());
+
+// app.use((req, res, next) => {
+//     res.locals.success = req.flash("success");
+//     res.locals.error = req.flash("error");
+//     next();
+// })
+
 app.get("/", (req, res) => {
     res.redirect("/sportsDays");
 })
@@ -37,19 +48,41 @@ app.get("/sportsDays", async (req, res) => {
     res.render("sportsDays/index", { sportsDays });
 })
 
-app.get("/sportsDays/new", (req, res) => {
+app.get("/sportsDays/new", async (req, res) => {
+    const templates = await TemplateEvent.find({})
     res.render("sportsDays/new", { templates });
 })
 
-app.post("/sportsDays", async (req, res) => {
+const validateSportsDay = (req, res, next) => {
+    const { error } = sportsDaySchema.validate(req.body);
+    if (error) {
+        res.send(error);
+    } else {
+        next();
+    }
+}
+
+app.post("/sportsDays", validateSportsDay, async (req, res) => {
     const newSportsDay = new SportsDay({ name: req.body.name, year: req.body.year, date: req.body.date });
-    for (id in req.body.events) {
-        const template = templates.find(obj => obj.id === id);
-        if (template) {
-            for (gender of req.body.events[id]) {
-                const event = new Event({ name: template.name, gender });
-                await event.save();
-                newSportsDay.events.push(event);
+    if (req.body.events) {
+        if (req.body.events.male) {
+            for (let id of req.body.events.male) {
+                const template = await TemplateEvent.findById(id);
+                if (template) { // if template id wrong it won't be used and app won't crash
+                    const event = new Event({ name: template.name, gender: "male" });
+                    await event.save(); // doesn't need await
+                    newSportsDay.events.push(event);
+                }
+            }
+        }
+        if (req.body.events.female) {
+            for (let id of req.body.events.female) {
+                const template = await TemplateEvent.findById(id);
+                if (template) { // if template id wrong it won't be used and app won't crash
+                    const event = new Event({ name: template.name, gender: "female" });
+                    await event.save(); // doesn't need await
+                    newSportsDay.events.push(event);
+                }
             }
         }
     }
@@ -87,18 +120,29 @@ app.delete("/sportsDays/:id", async (req, res) => {
     res.redirect("/sportsDays");
 })
 
-
 app.get("/sportsDays/:id/events/new", async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findById(id);
-    res.render("events/new", { day: sportsDay, templates });
+    res.render("events/new", { day: sportsDay });
 })
 
+const validateEvent = (req, res, next) => {
+    const { error } = eventSchema.validate(req.body);
+    if (error) {
+        res.send(error);
+    } else {
+        next();
+    }
+}
 
-app.post("/sportsDays/:id/events", async (req, res) => {
+app.post("/sportsDays/:id/events", validateEvent, async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findById(id);
-    const newEvent = new Event({ name: req.body.event, gender: req.body.gender });
+    if (req.body.template && req.body.template === "true") {
+        const template = new TemplateEvent({ name: req.body.name });
+        await template.save();
+    }
+    const newEvent = new Event({ name: req.body.name, gender: req.body.gender });
     await newEvent.save();
     sportsDay.events.push(newEvent);
     await sportsDay.save();
@@ -128,7 +172,16 @@ app.delete("/sportsDays/:id/events/:eventId", async (req, res) => {
     res.redirect(`/sportsDays/${id}`);
 })
 
-app.post("/sportsDays/:id/events/:eventId/join", async (req, res) => {
+const validateUser = (req, res, next) => {
+    const { error } = userSchema.validate(req.body);
+    if (error) {
+        res.send(error);
+    } else {
+        next();
+    }
+}
+
+app.post("/sportsDays/:id/events/:eventId/join", validateUser, async (req, res) => {
     const { id, eventId } = req.params;
     const user = new User(req.body);
     await user.save();
@@ -154,6 +207,12 @@ app.delete("/sportsDays/:id/events/:eventId/:userId", async (req, res) => {
     // req.flash("success", "Successfully signed up!");
 
     res.redirect(`/sportsDays/${id}/events/${eventId}`);
+})
+
+app.delete("/sportsDays/TemplateEvents/:id", async (req, res) => {
+    const { id } = req.params;
+    await TemplateEvent.findByIdAndDelete(id);
+    res.redirect(req.body.returnTo);
 })
 
 app.get("/test", async (req, res) => {
