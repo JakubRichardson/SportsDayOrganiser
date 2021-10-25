@@ -96,7 +96,7 @@
         removeButtons.forEach(btn => {
             btn.addEventListener("click", e => {
                 const submitTo = btn.getAttribute("data-submit-val");
-                removeForm.action = `/sportsDays/TemplateEvents/${submitTo}?_method=DELETE`;
+                removeForm.action = `/templateEvents/${submitTo}?_method=DELETE`;
                 returnTo.value = window.location.href;
                 removeForm.submit();
             })
