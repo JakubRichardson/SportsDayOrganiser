@@ -1,6 +1,6 @@
+move show page stylesheet
+event show even columns
 error page and form errors
-+ invalid validation
-validation id
 validation returnTo
 dissalow additional joi
 error handling
@@ -29,6 +29,10 @@ print a list of students signed up for events
 
 used:
 https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
+https://www.flaticon.com/premium-icon/wolf_3359935?term=wolf&page=1&position=53&page=1&position=53&related_id=3359935&origin=tag
+https://www.flaticon.com/free-icon/bear_185736
+https://www.flaticon.com/free-icon/lynx_185740
+https://www.flaticon.com/free-icon/bison_185749
 validateForms.js file
 
 Project requirements:

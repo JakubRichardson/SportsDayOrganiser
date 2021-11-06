@@ -7,6 +7,7 @@
             <label class="form-label" for="name">Event name</label>
             <input class="form-control" type="text" name="name" id="name" placeholder="Event name" required>
             <div class="valid-feedback">All Good!</div>
+            <div class="invalid-feedback">Please enter a valid name.</div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="gender">Gender</label>
@@ -16,12 +17,12 @@
                 <option value="female">Female</option>
             </select>
             <div class="valid-feedback">All Good!</div>
+            <div class="invalid-feedback">Please choose a gender.</div>
         </div>
         <div class="mb-3">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="template" value="true" id="template">
                 <label class="form-check-label" for="template">Add to Template Events</label>
-                <div class="valid-feedback">All Good!</div>
             </div>
         </div>
         <div class="mb-3"><button class="btn btn-success">Add Event</button></div>

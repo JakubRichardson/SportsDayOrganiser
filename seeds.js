@@ -15,9 +15,9 @@ mongoose.connect("mongodb://localhost:27017/sportsApp", {
     })
 
 const seedUsers = [
-    { name: "Mathew", house: "Bison" },
-    { name: "Tommy", house: "Wolf" },
-    { name: "Monty", house: "Lynx" }
+    { name: "Mathew", house: "bison" },
+    { name: "Tommy", house: "wolf" },
+    { name: "Monty", house: "lynx" }
 ]
 
 const seedEvents = [

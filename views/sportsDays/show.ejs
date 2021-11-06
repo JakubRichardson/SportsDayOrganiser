@@ -59,7 +59,8 @@
                                                     Name: <%= participant.name %>
                                                 </div>
                                                 <div class="m-2 m-md-0">
-                                                    House: <%= participant.house %>
+                                                    House: <%= participant.house[0].toUpperCase() +
+                                                        participant.house.slice(1) %>
                                                 </div>
                                             </li>
                                             <% } %>

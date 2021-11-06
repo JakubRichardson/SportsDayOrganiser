@@ -18,7 +18,7 @@ module.exports.eventSchema = Joi.object({
 
 module.exports.userSchema = Joi.object({
   name: Joi.string().required(),
-  house: Joi.string().valid("Bison", "Wolf", "Bear", "Lynx").required(),
+  house: Joi.string().valid("bison", "wolf", "bear", "lynx").required(),
 }).required()
 
 /*

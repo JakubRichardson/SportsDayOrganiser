@@ -4,15 +4,9 @@ const asyncWrapper = require("../utilities/asyncWrapper");
 
 const SportsDay = require("../models/sportsDay");
 const Event = require("../models/event");
+const TemplateEvent = require("../models/tempEvent");
 
 const { eventSchema } = require("../schemas.js"); //TODO remove me
-
-router.get("/:eventId", asyncWrapper(async (req, res) => {
-    const { id, eventId } = req.params;
-    const sportsDay = await SportsDay.findById(id);
-    const event = await Event.findById(eventId).populate("participants");
-    res.render("events/show", { day: sportsDay, event });
-}))
 
 router.get("/new", asyncWrapper(async (req, res) => {
     const { id } = req.params;
@@ -46,6 +40,13 @@ router.post("/", validateEvent, asyncWrapper(async (req, res) => {
     // req.flash("success", "Created new review!");
 
     res.redirect(`/sportsDays/${sportsDay._id}`);
+}))
+
+router.get("/:eventId", asyncWrapper(async (req, res) => {
+    const { id, eventId } = req.params;
+    const sportsDay = await SportsDay.findById(id);
+    const event = await Event.findById(eventId).populate("participants");
+    res.render("events/show", { day: sportsDay, event });
 }))
 
 router.delete("/:eventId", asyncWrapper(async (req, res) => {

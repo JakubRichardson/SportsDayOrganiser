@@ -1,0 +1,45 @@
+.house {
+    position: relative;
+    display: inline-block;
+}
+
+.house img {
+    width: 40px;
+}
+
+.house input[type="radio"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+.house label {
+    cursor: pointer;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.house input[type="radio"]:checked+button {
+    box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5)
+}
+
+.was-validated .house .form-check-input:valid+button {
+    border-color: #198754;
+    color: #198754;
+}
+
+.was-validated .house .form-check-input:valid+button:hover {
+    color:  #fff;
+}
+
+.was-validated .house .form-check-input:valid+button:hover {
+    background-color: #198754;
+}
+
+.was-validated .house .form-check-input:valid:checked+button {
+    box-shadow: 0 0 0 0.25rem rgba(60, 153, 110, 0.5);
+}

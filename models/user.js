@@ -8,7 +8,7 @@ const UserSchema = new Schema({
     },
     house: {
         type: String,
-        enum: ["Bison", "Wolf", "Bear", "Lynx"],
+        enum: ["bison", "wolf", "bear", "lynx"],
         required: true
     }
 });

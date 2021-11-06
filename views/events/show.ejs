@@ -1,5 +1,6 @@
 <% layout("layouts/boilerplate") %>
 
+    <link rel="stylesheet" href="/stylesheets/houses.css">
     <h1>
         <%= day.name %>
     </h1>
@@ -21,7 +22,7 @@
                             Name: <%= participant.name %>
                         </div>
                         <div class="m-2 m-md-0">
-                            House: <%= participant.house %>
+                            House: <%= participant.house[0].toUpperCase() + participant.house.slice(1) %>
                         </div>
                         <form
                             action="/sportsDays/<%= day._id %>/events/<%= event._id %>/<%= participant._id %>?_method=DELETE"
@@ -47,12 +48,54 @@
             </div>
             <div class="col-md-6 mb-3">
                 <label class="form-label" for="Gender">House</label>
-                <select name="house" class="form-select form-select-md" aria-label=".form-select-sm example" required>
+                <div class="d-flex flex-wrap">
+                    <div class="house">
+                        <input class="form-check-input" type="radio" name="house" id="bear" value="bear" checked>
+                        <button class="btn btn-outline-primary m-1" type="button">
+                            <div class="form-check m-1 ps-1 pe-1">
+                                <img src="/imgs/bear.png" alt="Image of bear">
+                                <label class="form-check-label" for="bear"></label>
+                                <span class="fs-6">Bear</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="house">
+                        <input class="form-check-input" type="radio" name="house" id="bison" value="bison">
+                        <button class="btn btn-outline-primary m-1" type="button">
+                            <div class="form-check m-1 ps-1 pe-1">
+                                <img src="/imgs/bison.png" alt="Image of Bison">
+                                <label class=" form-check-label" for="bison"></label>
+                                <span class="fs-6">Bison</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="house">
+                        <input class="form-check-input" type="radio" name="house" id="lynx" value="lynx">
+                        <button class="btn btn-outline-primary m-1" type="button">
+                            <div class="form-check m-1 ps-1 pe-1">
+                                <img src="/imgs/lynx.png" alt="Image of lynx">
+                                <label class=" form-check-label" for="lynx"></label>
+                                <span class="fs-6">Lynx</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="house">
+                        <input class="form-check-input" type="radio" name="house" id="wolf" value="wolf">
+                        <button class="btn btn-outline-primary m-1" type="button">
+                            <div class="form-check m-1 ps-1 pe-1">
+                                <img src="/imgs/wolf.png" alt="Image of Wolf">
+                                <label class=" form-check-label" for="wolf"></label>
+                                <span class="fs-6">Wolf</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <!-- <select name="house" class="form-select form-select-md" aria-label=".form-select-sm example" required>
                     <option value="Bear" selected>Bear</option>
                     <option value="Bison">Bison</option>
                     <option value="Lynx">Lynx</option>
                     <option value="Wolf">Wolf</option>
-                </select>
+                </select> -->
                 <div class="valid-feedback">All Good!</div>
                 <div class="invalid-feedback">Please choose a valid house.</div>
             </div>
@@ -61,6 +104,8 @@
             <button class="btn btn-success">Sign Up</button>
         </div>
     </form>
+
+
 
     <div class="row mb-3">
         <form class="col-auto" action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE" method="POST">
