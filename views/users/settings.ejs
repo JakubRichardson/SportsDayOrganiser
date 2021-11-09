@@ -1,0 +1,30 @@
+<% layout("layouts/boilerplate") %>
+
+    <div class="row my-3">
+        <div class="col-sm-8 offset-sm-2">
+            <div class="mb-4">
+                <h1>
+                    Hi, <%= signedInUser.username %>!
+                </h1>
+                <!-- <p class="fs-5">Page Settings</p> -->
+                <% if(signedInUser.teacher===true) { %>
+                    <h5>
+                        Teacher Account
+                    </h5>
+                    <% } else { %>
+                        <h5>
+                            Student Account
+                        </h5>
+                        <%- include("../partials/studentSettings") %>
+                            <% } %>
+            </div>
+            <p class="fs-5">Delete Account</p>
+            <div class="mb-3">
+                <form action="/deleteAccount?_method=DELETE" method="post">
+                    <div class="d-grid">
+                        <button class="btn btn-danger">Delete Account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

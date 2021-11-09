@@ -55,9 +55,12 @@ Ask about layout and permissions
 No numbers in names#
 max min on dates
 teacher sign up for sportsdays?
+master password
+only view your year group
+username and password change?
 
 Meeting 10/21/2021 asking about year groups
-Refactor templateEvents as hard to validate
+Meeting 11/9/2021 feedback, found out need to hide students data
 
 
 firstname surname and form
@@ -69,15 +72,13 @@ max number from a certian house
 username validation so no duplicate
 https
 flash errors
-move user routes
 edit error to redirect login..
-master password
 middlewares
 validate user routes
 login fail
 only view your year group
-show signed up teacher vs student
 filters male/female track/field
-are you sure delete
 settings
 unsignup
+page settings
+delete account

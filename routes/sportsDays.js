@@ -65,12 +65,15 @@ router.get("/:id", checkLoggedIn, asyncWrapper(async (req, res) => {
     const { id } = req.params;
 
     let populateObj = { path: "participants", match: { _id: req.user._id } };
-    if (req.user?.teacher === true) {
+    let genderQuery = { gender: req.user.gender };
+    if (req.user.teacher === true) {
         populateObj = { path: "participants" }
+        genderQuery = {};
     }
 
     const sportsDay = await SportsDay.findById(id).populate({
         path: 'events',
+        match: genderQuery,
         populate: populateObj
     })
 

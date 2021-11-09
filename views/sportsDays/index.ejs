@@ -55,11 +55,13 @@
                                         <form class="col-auto" action="/sportsDays/<%= day._id %>/edit">
                                             <button class="btn btn-warning">Edit</button>
                                         </form>
-
-                                        <form class="col-auto" action="/sportsDays/<%= day._id %>?_method=DELETE"
-                                            method="POST">
-                                            <button class="btn btn-danger">Delete</button>
-                                        </form>
+                                        <div class="col-auto">
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal" data-name="<%= day.name %>"
+                                                data-submit-to="/sportsDays/<%= day._id %>">
+                                                Delete
+                                            </button>
+                                        </div>
                                         <% } %>
                                 </div>
                             </div>
@@ -71,3 +73,9 @@
                         <div class="mb-3 fs-2">No Sports Days yet!</div>
                         <% } %>
     </div>
+
+    <% if(signedInUser && signedInUser.teacher===true) { %>
+        <%- include("../partials/deleteModal") %>
+
+            <script src="/javascripts/deleteModal.js"></script>
+            <% } %>

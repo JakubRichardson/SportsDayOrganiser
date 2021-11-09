@@ -17,16 +17,19 @@
                 <h3 class="col">Events - <span data-num-events>
                         <%= day.events.length %>
                     </span>:</h3>
-                <div class="btn-group col" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="eventSort" id="all" autocomplete="off" data-all-radio
-                        checked>
-                    <label class="btn btn-outline-primary" for="all">All</label>
-                    <input type="radio" class="btn-check" name="eventSort" id="male" data-male-radio autocomplete="off">
-                    <label class="btn btn-outline-primary" for="male">Male</label>
-                    <input type="radio" class="btn-check" name="eventSort" id="female" data-female-radio
-                        autocomplete="off">
-                    <label class="btn btn-outline-primary" for="female">Female</label>
-                </div>
+                <% if(signedInUser && signedInUser.teacher===true) { %>
+                    <div class="btn-group col" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="eventSort" id="all" autocomplete="off"
+                            data-all-radio checked>
+                        <label class="btn btn-outline-primary" for="all">All</label>
+                        <input type="radio" class="btn-check" name="eventSort" id="male" data-male-radio
+                            autocomplete="off">
+                        <label class="btn btn-outline-primary" for="male">Male</label>
+                        <input type="radio" class="btn-check" name="eventSort" id="female" data-female-radio
+                            autocomplete="off">
+                        <label class="btn btn-outline-primary" for="female">Female</label>
+                    </div>
+                    <% } %>
             </div>
         </div>
         <% if(signedInUser && signedInUser.teacher===true) { %>
@@ -73,11 +76,14 @@
                                                     <button class="btn btn-primary">View more</button>
                                                 </div>
                                                 <% if(signedInUser && signedInUser.teacher===true) { %>
-                                                    <form class="col-auto"
-                                                        action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE"
-                                                        method="POST">
-                                                        <button class="btn btn-danger">Delete Event</button>
-                                                    </form>
+                                                    <div class="col-auto">
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                            data-name="<%= event.name %>"
+                                                            data-submit-to="/sportsDays/<%= day._id %>/events/<%= event._id %>">
+                                                            Delete Event
+                                                        </button>
+                                                    </div>
                                                     <% } else { %>
                                                         <form class="col-auto"
                                                             action="/sportsDays/<%= day._id %>/events/<%= event._id %>"
@@ -104,9 +110,13 @@
             <% } %>
 
                 <% if(signedInUser && signedInUser.teacher===true) { %>
-                    <form class="col-auto" action="/sportsDays/<%= day._id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-danger">Delete</button>
-                    </form>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" data-name="<%= day.name %>"
+                            data-submit-to="/sportsDays/<%= day._id %>">
+                            Delete
+                        </button>
+                    </div>
                     <% } %>
 
                         <form class="col-auto" action="/sportsDays">
@@ -114,4 +124,10 @@
                         </form>
     </div>
 
-    <script src="/javascripts/genderFiltering.js"></script>
+
+    <% if(signedInUser && signedInUser.teacher===true) { %>
+        <%- include("../partials/deleteModal") %>
+
+            <script src="/javascripts/deleteModal.js"></script>
+            <script src="/javascripts/genderFiltering.js"></script>
+            <% } %>

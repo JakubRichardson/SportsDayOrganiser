@@ -7,7 +7,6 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const asyncWrapper = require("./utilities/asyncWrapper");
 const AppError = require("./utilities/AppError");
-// const flash = require("connect-flash");
 const methodOverride = require("method-override");
 const passport = require("passport");
 const passportLocal = require("passport-local");
@@ -17,10 +16,9 @@ const Event = require("./models/event");
 const TemplateEvent = require("./models/tempEvent");
 const User = require("./models/user");
 
-const { notLoggedIn } = require("./middleware");
-
 const { sportsDaySchema, eventSchema, userSchema } = require("./schemas.js"); //TODO remove me
 
+const authRoutes = require("./routes/auth");
 const sportsDayRoutes = require("./routes/sportsDays");
 const eventRoutes = require("./routes/events");
 const userRoutes = require("./routes/users");
@@ -72,6 +70,7 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use("/", authRoutes)
 app.use("/sportsDays", sportsDayRoutes)
 app.use("/sportsDays/:id/events", eventRoutes)
 app.use("/sportsDays/:id/events/:eventId", userRoutes)
@@ -81,54 +80,6 @@ app.get("/", (req, res) => {
     res.redirect("/sportsDays");
 })
 
-app.get("/login", notLoggedIn, (req, res) => {
-    res.render("users/login")
-})
-
-app.post("/login", notLoggedIn, passport.authenticate("local", { failureFlash: true, failureRedirect: "/login" }), (req, res) => {
-    req.flash("success", "Succesfully logged in! Welcome Back!");
-    res.redirect("/sportsDays");
-})
-
-app.get("/logout", (req, res) => {
-    req.logout();
-    req.flash("success", "Succesfully logged out. See you soon!");
-    res.redirect("/sportsDays");
-})
-
-app.get("/registerStudent", (req, res) => {
-    res.render("users/registerStudent");
-})
-
-app.post("/registerStudent", async (req, res) => {
-    const { firstname, surname, formGroup, house, username, password } = req.body;
-    const user = new User({ teacher: false, firstname, surname, formGroup, house, username });
-    const registeredUser = await User.register(user, password);
-
-    req.login(registeredUser, err => {
-        if (err) return next(err);
-    });
-
-    req.flash("success", "Welcome!");
-    res.redirect("/sportsDays");
-})
-
-app.get("/registerTeacher", (req, res) => {
-    res.render("users/registerTeacher")
-})
-
-app.post("/registerTeacher", async (req, res) => {
-    const { username, password } = req.body;
-    const user = new User({ username, teacher: true });
-    const registeredUser = await User.register(user, password);
-
-    req.login(registeredUser, err => {
-        if (err) return next(err);
-    });
-
-    req.flash("success", "Welcome!");
-    res.redirect("/sportsDays");
-})
 
 
 app.all("*", (req, res, next) => {

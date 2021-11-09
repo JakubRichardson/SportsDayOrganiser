@@ -63,7 +63,10 @@ const templateEvents = [
 ]
 
 const seedDB = async () => {
-    await SportsDay.deleteMany({}); // removes all nested with middleware
+    await SportsDay.deleteMany({});
+    for (let event of await Event.find({})) {
+        await Event.findByIdAndDelete(event._id); // removes all nested with middleware
+    }
     for (let day of seedSportsDays) {
         const sportsDay = new SportsDay(day);
         for (let event of seedEvents) {

@@ -17,9 +17,28 @@ module.exports.eventSchema = Joi.object({
   template: Joi.string().valid("true"),
 }).required();
 
-module.exports.userSchema = Joi.object({
+module.exports.studentSchema = Joi.object({
   name: Joi.string().required(),
+  surname: Joi.string().required(),
+  form: Joi.string().required(),
   house: Joi.string().valid("bison", "wolf", "bear", "lynx").required(),
+  gender: Joi.string().valid("male", "female").required(),
+  username: Joi.string().required(),
+  password: Joi.string().required(),
+}).required()
+
+module.exports.studentSchemaNoPass = Joi.object({
+  name: Joi.string().required(),
+  surname: Joi.string().required(),
+  form: Joi.string().required(),
+  house: Joi.string().valid("bison", "wolf", "bear", "lynx").required(),
+  gender: Joi.string().valid("male", "female").required(),
+}).required()
+
+module.exports.teacherSchema = Joi.object({
+  username: Joi.string().required(),
+  password: Joi.string().required(),
+  masterPassword: Joi.string().required()
 }).required()
 
 /*

@@ -1,0 +1,90 @@
+<link rel="stylesheet" href="/stylesheets/houses.css">
+
+<p class="fs-5">Update account info</p>
+<form action="/updateStudent?_method=PUT" method="POST" class="validated-form" novalidate>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label" for="name">Firstname</label>
+            <input class="form-control" type="text" id="name" name="name" value="<%= signedInUser.name %>" required>
+            <div class="valid-feedback">All Good!</div>
+            <div class="invalid-feedback">Please enter a valid name</div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label" for="surname">Surname</label>
+            <input class="form-control" type="text" id="surname" name="surname" value="<%= signedInUser.surname %>"
+                required>
+            <div class="valid-feedback">All Good!</div>
+            <div class="invalid-feedback">Please enter a valid surname</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label" for="form">Form group</label>
+            <input class="form-control" type="text" id="form" name="form" value="<%= signedInUser.form %>" required>
+            <div class="valid-feedback">All Good!</div>
+            <div class="invalid-feedback">Please enter a valid form group</div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label" for="gender">Gender</label>
+            <select name="gender" id="gender" class="form-select form-select-md" aria-label=".form-select-sm example"
+                required>
+                <option value="male" <%=(signedInUser.gender==="male" ) ? "selected" : null %> >Male</option>
+                <option value="female" <%=(signedInUser.gender==="female" ) ? "selected" : null %>>Female</option>
+            </select>
+            <div class="valid-feedback">All Good!</div>
+            <div class="invalid-feedback">Please choose a gender</div>
+        </div>
+    </div>
+    House
+    <div class="d-flex justify-content-center">
+        <div class="d-flex flex-wrap mb-3">
+            <div class="house">
+                <input class="form-check-input" type="radio" name="house" id="bear" value="bear"
+                    <%=(signedInUser.house==="bear" ) ? "checked" : null %> >
+                <button class="btn btn-outline-primary m-1" type="button">
+                    <div class="form-check m-1 ps-1 pe-1">
+                        <img src="/imgs/bear.png" alt="Image of bear">
+                        <label class="form-check-label" for="bear"></label>
+                        <span class="fs-6">Bear</span>
+                    </div>
+                </button>
+            </div>
+            <div class="house">
+                <input class="form-check-input" type="radio" name="house" id="bison" value="bison"
+                    <%=(signedInUser.house==="bison" ) ? "checked" : null %>>
+                <button class="btn btn-outline-primary m-1" type="button">
+                    <div class="form-check m-1 ps-1 pe-1">
+                        <img src="/imgs/bison.png" alt="Image of Bison">
+                        <label class=" form-check-label" for="bison"></label>
+                        <span class="fs-6">Bison</span>
+                    </div>
+                </button>
+            </div>
+            <div class="house">
+                <input class="form-check-input" type="radio" name="house" id="lynx"
+                    value="lynx <%=(signedInUser.house===" lynx" ) ? "checked" : null %>">
+                <button class="btn btn-outline-primary m-1" type="button">
+                    <div class="form-check m-1 ps-1 pe-1">
+                        <img src="/imgs/lynx.png" alt="Image of lynx">
+                        <label class=" form-check-label" for="lynx"></label>
+                        <span class="fs-6">Lynx</span>
+                    </div>
+                </button>
+            </div>
+            <div class="house">
+                <input class="form-check-input" type="radio" name="house" id="wolf" value="wolf"
+                    <%=(signedInUser.house==="wolf" ) ? "checked" : null %>>
+                <button class="btn btn-outline-primary m-1" type="button">
+                    <div class="form-check m-1 ps-1 pe-1">
+                        <img src="/imgs/wolf.png" alt="Image of Wolf">
+                        <label class=" form-check-label" for="wolf"></label>
+                        <span class="fs-6">Wolf</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="d-grid">
+        <button class="btn btn-success">Update</button>
+    </div>
+</form>

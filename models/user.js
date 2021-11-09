@@ -16,6 +16,10 @@ const UserSchema = new Schema({
         type: String,
         enum: ["bison", "wolf", "bear", "lynx"],
     },
+    gender: {
+        type: String,
+        enum: ["male", "female"]
+    },
     participating: [
         {
             type: Schema.Types.ObjectId,
