@@ -4,9 +4,11 @@
         <div class="col-md-6 mb-3">
             <h1>All Sports Days</h1>
         </div>
-        <div class="col-md-6 mb-3 d-flex align-items-center">
-            <a class="btn btn-success btn-lg" href="/sportsDays/new">New Sports Day</a>
-        </div>
+        <% if(signedInUser && signedInUser.teacher===true) { %>
+            <div class="col-md-6 mb-3 d-flex align-items-center">
+                <a class="btn btn-success btn-lg" href="/sportsDays/new">New Sports Day</a>
+            </div>
+            <% } %>
     </div>
 
     <div class="row">
@@ -16,7 +18,7 @@
                     <a class="text-decoration-none text-reset" href="/sportsDays/<%=day._id %>">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row">
+                                <div class="row mb-2">
                                     <h5 class="card-title col-md-6">
                                         <%= day.name %>
                                     </h5>
@@ -27,10 +29,10 @@
                                         Year: <%= day.year %>
                                     </div>
                                 </div>
-                                <p class="card-text">
+                                <div class="card-text">
                                     <% if(day.events.length> 0) { %>
                                         <p class="card-text mb-1">Events - <%= day.events.length %>: </p>
-                                        <ul class="list-group list-group-flush mb-2">
+                                        <ul class="list-group list-group-flush">
                                             <% for(let event of day.events) { %>
                                                 <li
                                                     class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
@@ -44,16 +46,21 @@
                                             <p class="card-text">No events yet!</p>
                                             <% } %>
                                                 <!-- <button class="btn btn-primary">Sign up</button> -->
-                                </p>
-                                <div class="row">
-                                    <form class="col-auto" action="/sportsDays/<%= day._id %>/edit">
-                                        <button class="btn btn-warning">Edit</button>
-                                    </form>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-auto">
+                                        <button class="btn btn-primary">View more</button>
+                                    </div>
+                                    <% if(signedInUser && signedInUser.teacher===true) { %>
+                                        <form class="col-auto" action="/sportsDays/<%= day._id %>/edit">
+                                            <button class="btn btn-warning">Edit</button>
+                                        </form>
 
-                                    <form class="col-auto" action="/sportsDays/<%= day._id %>?_method=DELETE"
-                                        method="POST">
-                                        <button class="btn btn-danger">Delete</button>
-                                    </form>
+                                        <form class="col-auto" action="/sportsDays/<%= day._id %>?_method=DELETE"
+                                            method="POST">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                        <% } %>
                                 </div>
                             </div>
                         </div>

@@ -29,9 +29,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 mb-3 d-flex align-items-center">
-            <a class="btn btn-success" href="/sportsDays/<%= day._id %>/events/new">New Event</a>
-        </div>
+        <% if(signedInUser && signedInUser.teacher===true) { %>
+            <div class="col-md-6 mb-3 d-flex align-items-center">
+                <a class="btn btn-success" href="/sportsDays/<%= day._id %>/events/new">New Event</a>
+            </div>
+            <% } %>
     </div>
     <div class="row">
         <% if(day.events.length> 0) { %>
@@ -49,6 +51,8 @@
                                         <%= event.gender[0].toUpperCase() + event.gender.slice(1) %>
                                     </div>
                                 </div>
+                                <p class="card-text mb-1">Participant limit: <%= event.limit ? event.limit : "None" %>
+                                </p>
                                 <% if(event.participants.length> 0) { %>
                                     <p class="card-text">Participants - <%= event.participants.length %>:</p>
                                     <ul class="list-group list-group-flush mb-2">
@@ -56,11 +60,7 @@
                                             <li
                                                 class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
                                                 <div class="m-2 m-md-0">
-                                                    Name: <%= participant.name %>
-                                                </div>
-                                                <div class="m-2 m-md-0">
-                                                    House: <%= participant.house[0].toUpperCase() +
-                                                        participant.house.slice(1) %>
+                                                    Name: <%= participant.username %>
                                                 </div>
                                             </li>
                                             <% } %>
@@ -69,15 +69,22 @@
                                         <p class="card-text">No participants yet!</p>
                                         <% } %>
                                             <div class="row">
-                                                <form class="col-auto"
-                                                    action="/sportsDays/<%= day._id %>/events/<%= event._id %>">
-                                                    <button class="btn btn-primary">Sign up</button>
-                                                </form>
-                                                <form class="col-auto"
-                                                    action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE"
-                                                    method="POST">
-                                                    <button class="btn btn-danger">Delete Event</button>
-                                                </form>
+                                                <div class="col-auto">
+                                                    <button class="btn btn-primary">View more</button>
+                                                </div>
+                                                <% if(signedInUser && signedInUser.teacher===true) { %>
+                                                    <form class="col-auto"
+                                                        action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE"
+                                                        method="POST">
+                                                        <button class="btn btn-danger">Delete Event</button>
+                                                    </form>
+                                                    <% } else { %>
+                                                        <form class="col-auto"
+                                                            action="/sportsDays/<%= day._id %>/events/<%= event._id %>"
+                                                            method="POST">
+                                                            <button class="btn btn-success">Sign up</button>
+                                                        </form>
+                                                        <% } %>
                                             </div>
                             </div>
                         </div>
@@ -90,45 +97,21 @@
     </div>
 
     <div class="row mb-3">
-        <form class="col-auto" action="/sportsDays/<%= day._id %>/edit">
-            <button class="btn btn-warning">Edit</button>
-        </form>
+        <% if(signedInUser && signedInUser.teacher===true) { %>
+            <form class="col-auto" action="/sportsDays/<%= day._id %>/edit">
+                <button class="btn btn-warning">Edit</button>
+            </form>
+            <% } %>
 
-        <form class="col-auto" action="/sportsDays/<%= day._id %>?_method=DELETE" method="POST">
-            <button class="btn btn-danger">Delete</button>
-        </form>
+                <% if(signedInUser && signedInUser.teacher===true) { %>
+                    <form class="col-auto" action="/sportsDays/<%= day._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                    <% } %>
 
-        <form class="col-auto" action="/sportsDays">
-            <button class="btn btn-primary">All Sports Days</button>
-        </form>
+                        <form class="col-auto" action="/sportsDays">
+                            <button class="btn btn-primary">All Sports Days</button>
+                        </form>
     </div>
 
-    <script>
-        const numEvents = document.querySelector("[data-num-events]");
-        const cards = document.querySelectorAll("[data-card-container]");
-        const allRadioButton = document.querySelector("[data-all-radio]");
-        allRadioButton.addEventListener("change", function () {
-            for (card of cards) {
-                card.style.display = "block";
-            }
-            numEvents.textContent = cards.length;
-        })
-        const filterCallback = word => {
-            return () => {
-                let total = 0;
-                for (card of cards) {
-                    if (card.getAttribute("data-card-gender") === word) {
-                        card.style.display = "block";
-                        total++;
-                    } else {
-                        card.style.display = "none";
-                    }
-                }
-                numEvents.textContent = total;
-            }
-        }
-        const maleRadioButton = document.querySelector("[data-male-radio]");
-        maleRadioButton.addEventListener("change", filterCallback("male"));
-        const femaleRadioButton = document.querySelector("[data-female-radio]");
-        femaleRadioButton.addEventListener("change", filterCallback("female"));
-    </script>
+    <script src="/javascripts/genderFiltering.js"></script>

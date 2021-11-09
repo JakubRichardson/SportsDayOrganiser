@@ -5,13 +5,10 @@ validation returnTo
 dissalow additional joi
 error handling
 custom add to template button
-Make Animal svgs
 ?most popular in navbar
 Add flash
 list groups with more - can use table
 implement event sort
-change event model to require lowercase gender
-move scripts on new and show pages into separate files
 when deleting remove all array aswell
 make show more on lists
 nicer scrollbar
@@ -49,13 +46,38 @@ Project requirements:
 9. Scoring pages for specific events
 
 
-Ask about login System
+#Ask about login System
 Ask about participant limit
+Sorting by house
 Ask about icons for animals
-Ask about layout and permissions
 Dropdown or Radio?
+Ask about layout and permissions
 No numbers in names#
 max min on dates
+teacher sign up for sportsdays?
 
 Meeting 10/21/2021 asking about year groups
 Refactor templateEvents as hard to validate
+
+
+firstname surname and form
+only singing up
+show number signed up not names
+only teacher see names and be able to remove them
+max number from a certian house
+
+username validation so no duplicate
+https
+flash errors
+move user routes
+edit error to redirect login..
+master password
+middlewares
+validate user routes
+login fail
+only view your year group
+show signed up teacher vs student
+filters male/female track/field
+are you sure delete
+settings
+unsignup

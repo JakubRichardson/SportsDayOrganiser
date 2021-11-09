@@ -8,7 +8,9 @@ const TemplateEvent = require("../models/tempEvent");
 
 const { eventSchema } = require("../schemas.js"); //TODO remove me
 
-router.get("/new", asyncWrapper(async (req, res) => {
+const { checkLoggedIn, checkTeacher } = require("../middleware");
+
+router.get("/new", checkLoggedIn, checkTeacher, asyncWrapper(async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findById(id);
     res.render("events/new", { day: sportsDay });
@@ -24,38 +26,40 @@ const validateEvent = (req, res, next) => {
     }
 }
 
-router.post("/", validateEvent, asyncWrapper(async (req, res) => {
+router.post("/", checkLoggedIn, checkTeacher, validateEvent, asyncWrapper(async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findById(id);
     if (req.body.template && req.body.template === "true") {
-        const template = new TemplateEvent({ name: req.body.name });
+        const template = new TemplateEvent({ name: req.body.name, limit: req.body.limit });
         await template.save();
     }
-    const newEvent = new Event({ name: req.body.name, gender: req.body.gender });
+    const newEvent = new Event({ name: req.body.name, gender: req.body.gender, limit: req.body.limit });
     await newEvent.save();
     sportsDay.events.push(newEvent);
     await sportsDay.save();
 
-    // TODO
-    // req.flash("success", "Created new review!");
+    req.flash("success", "Created new event!");
 
     res.redirect(`/sportsDays/${sportsDay._id}`);
 }))
 
-router.get("/:eventId", asyncWrapper(async (req, res) => {
+router.get("/:eventId", checkLoggedIn, asyncWrapper(async (req, res) => {
     const { id, eventId } = req.params;
     const sportsDay = await SportsDay.findById(id);
-    const event = await Event.findById(eventId).populate("participants");
+    let populateObj = { path: "participants", match: { _id: req.user._id } };
+    if (req.user?.teacher === true) {
+        populateObj = { path: "participants" }
+    }
+    const event = await Event.findById(eventId).populate(populateObj);
     res.render("events/show", { day: sportsDay, event });
 }))
 
-router.delete("/:eventId", asyncWrapper(async (req, res) => {
+router.delete("/:eventId", checkLoggedIn, checkTeacher, asyncWrapper(async (req, res) => {
     const { id, eventId } = req.params;
     await SportsDay.findByIdAndUpdate({ _id: id }, { $pull: { events: eventId } });
     await Event.findByIdAndDelete(req.params.eventId);
 
-    // TODO
-    // req.flash("success", "Successfully deleted review!");
+    req.flash("success", "Successfully deleted event!");
 
     res.redirect(`/sportsDays/${id}`);
 }))

@@ -7,40 +7,47 @@ const User = require("../models/user");
 
 const { userSchema } = require("../schemas.js"); //TODO remove me
 
-const validateUser = (req, res, next) => {
-    const { error } = userSchema.validate(req.body);
-    if (error) {
-        const text = error.details.map(ind => ind.message).join(", ");
-        throw new AppError(text, 400)
-    } else {
-        next();
-    }
-}
+const { checkLoggedIn, hasPermission, checkStudent } = require("../middleware");
 
-router.post("/", validateUser, asyncWrapper(async (req, res) => {
+// const validateUser = (req, res, next) => {
+//     const { error } = userSchema.validate(req.body);
+//     if (error) {
+//         const text = error.details.map(ind => ind.message).join(", ");
+//         throw new AppError(text, 400)
+//     } else {
+//         next();
+//     }
+// }
+
+router.post("/", checkLoggedIn, checkStudent, asyncWrapper(async (req, res) => {
     const { id, eventId } = req.params;
-    const user = new User(req.body);
-    await user.save();
     const event = await Event.findById(eventId);
-    event.participants.push(user);
+    if (event.participants.includes(req.user._id)) {
+        req.flash("fail", `You have already signed up for ${event.name}!`);
+        return res.redirect(`/sportsDays/${id}/events/${eventId}`);
+    }
+    const user = await User.findById(req.user._id);
+    event.participants.push(req.user._id);
     await event.save();
+    user.participating.push(event);
+    await user.save();
 
-    // TODO
-    // req.flash("success", "Successfully signed up!");
+    req.flash("success", `Successfully signed up for ${event.name}!`);
 
     res.redirect(`/sportsDays/${id}/events/${eventId}`);
 }))
 
 
-router.delete("/:userId", asyncWrapper(async (req, res) => {
+router.delete("/:userId", checkLoggedIn, hasPermission, asyncWrapper(async (req, res) => {
     const { id, eventId, userId } = req.params;
+    const user = await User.findById(req.user._id);
     const event = await Event.findById(eventId);
-    const deletedUser = await User.findByIdAndDelete(userId);
-    event.participants.pull({ _id: deletedUser._id });
+    event.participants.pull({ _id: userId });
     await event.save();
+    user.participating.pull({ _id: event._id });
+    await user.save();
 
-    // TODO
-    // req.flash("success", "Successfully signed up!");
+    req.flash("success", `Successfully removed from ${event.name}!`);
 
     res.redirect(`/sportsDays/${id}/events/${eventId}`);
 }))

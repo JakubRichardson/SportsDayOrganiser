@@ -8,12 +8,14 @@ const TemplateEvent = require("../models/tempEvent");
 
 const { sportsDaySchema } = require("../schemas.js"); //TODO remove me
 
+const { checkLoggedIn, checkTeacher } = require("../middleware");
+
 router.get("/", asyncWrapper(async (req, res) => {
     const sportsDays = await SportsDay.find({}).populate({ path: "events" });
     res.render("sportsDays/index", { sportsDays });
 }))
 
-router.get("/new", asyncWrapper(async (req, res) => {
+router.get("/new", checkLoggedIn, checkTeacher, asyncWrapper(async (req, res) => {
     const templates = await TemplateEvent.find({})
     res.render("sportsDays/new", { templates });
 }))
@@ -28,7 +30,7 @@ const validateSportsDay = (req, res, next) => {
     }
 }
 
-router.post("/", validateSportsDay, asyncWrapper(async (req, res) => {
+router.post("/", checkLoggedIn, checkTeacher, validateSportsDay, asyncWrapper(async (req, res) => {
     const newSportsDay = new SportsDay({ name: req.body.name, year: req.body.year, date: req.body.date });
     if (req.body.events) {
         if (req.body.events.male) {
@@ -53,36 +55,62 @@ router.post("/", validateSportsDay, asyncWrapper(async (req, res) => {
         }
     }
     await newSportsDay.save();
+
+    req.flash("success", `Successfully created ${newSportsDay.name}!`);
+
     res.redirect(`/sportsDays/${newSportsDay._id}`);
 }))
 
-router.get("/:id", asyncWrapper(async (req, res) => {
+router.get("/:id", checkLoggedIn, asyncWrapper(async (req, res) => {
     const { id } = req.params;
+
+    let populateObj = { path: "participants", match: { _id: req.user._id } };
+    if (req.user?.teacher === true) {
+        populateObj = { path: "participants" }
+    }
+
     const sportsDay = await SportsDay.findById(id).populate({
         path: 'events',
-        populate: {
-            path: 'participants',
-            model: 'User'
-        }
+        populate: populateObj
     })
+
+    //todo
+    // if (!sportsDay) {
+    //     req.flash("error", "Cannot find that Sports Day!")
+    //     return res.redirect("/campgrounds");
+    // }
+
     res.render("sportsDays/show", { day: sportsDay });
 }))
 
-router.get("/:id/edit", asyncWrapper(async (req, res) => {
+router.get("/:id/edit", checkLoggedIn, checkTeacher, async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findById(id);
-    res.render("sportsDays/edit", { day: sportsDay });
-}))
 
-router.put("/:id", asyncWrapper(async (req, res) => {
+    // todo
+    // if (!sportsDay) {
+    //     req.flash("error", "Cannot find that Sports Day!")
+    //     return res.redirect("/campgrounds");
+    // }
+
+    res.render("sportsDays/edit", { day: sportsDay });
+})
+
+router.put("/:id", checkLoggedIn, checkTeacher, asyncWrapper(async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
+
+    req.flash("success", `Successfully edited ${sportsDay.name}!!`);
+
     res.redirect(`/sportsDays/${sportsDay._id}`);
 }))
 
-router.delete("/:id", asyncWrapper(async (req, res) => {
+router.delete("/:id", checkLoggedIn, checkTeacher, asyncWrapper(async (req, res) => {
     const { id } = req.params;
     const deletedSportsDay = await SportsDay.findByIdAndDelete(id);
+
+    req.flash("success", `Successfully deleted ${deletedSportsDay.name}!!`);
+
     res.redirect("/sportsDays");
 }))
 

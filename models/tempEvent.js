@@ -5,6 +5,10 @@ const TempEventSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
+    },
+    limit: {
+        type: Number,
+        min: 0
     }
 })
 

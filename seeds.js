@@ -14,11 +14,11 @@ mongoose.connect("mongodb://localhost:27017/sportsApp", {
         console.log("Error:" + err);
     })
 
-const seedUsers = [
-    { name: "Mathew", house: "bison" },
-    { name: "Tommy", house: "wolf" },
-    { name: "Monty", house: "lynx" }
-]
+// const seedUsers = [
+//     { name: "Mathew", house: "bison" },
+//     { name: "Tommy", house: "wolf" },
+//     { name: "Monty", house: "lynx" }
+// ]
 
 const seedEvents = [
     { name: "Javelin", gender: "male" },
@@ -68,11 +68,11 @@ const seedDB = async () => {
         const sportsDay = new SportsDay(day);
         for (let event of seedEvents) {
             const newEvent = new Event(event);
-            for (let user of seedUsers) {
-                const newUser = new User(user);
-                await newUser.save();
-                newEvent.participants.push(newUser);
-            }
+            // for (let user of seedUsers) {
+            //     const newUser = new User(user);
+            //     await newUser.save();
+            //     newEvent.participants.push(newUser);
+            // }
             await newEvent.save();
             sportsDay.events.push(newEvent);
         }

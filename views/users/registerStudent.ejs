@@ -1,0 +1,91 @@
+<% layout("layouts/boilerplate") %>
+
+    <link rel="stylesheet" href="/stylesheets/houses.css">
+    <div class="row my-3">
+        <div class="col-sm-8 offset-sm-2">
+            <!-- <img src="/imgs/hurricanesLogo.jpg" alt="" class="img-thumbnail rounded mb-3" /> -->
+            <h5 class="card-title">Register as Student</h5>
+            <form action="/registerStudent" method="POST" class="validated-form" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="name">Firstname</label>
+                        <input class="form-control" type="text" id="name" name="name" autofocus required>
+                        <div class="valid-feedback">All Good!</div>
+                        <div class="invalid-feedback">Please enter a valid name</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="surname">Surname</label>
+                        <input class="form-control" type="text" id="surname" name="surname" required>
+                        <div class="valid-feedback">All Good!</div>
+                        <div class="invalid-feedback">Please enter a valid surname</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="form">Form group</label>
+                    <input class="form-control" type="text" id="form" name="form" required>
+                    <div class="valid-feedback">All Good!</div>
+                    <div class="invalid-feedback">Please enter a valid form group</div>
+                </div>
+                House
+                <div class="d-flex justify-content-center">
+                    <div class="d-flex flex-wrap mb-3">
+                        <div class="house">
+                            <input class="form-check-input" type="radio" name="house" id="bear" value="bear" checked>
+                            <button class="btn btn-outline-primary m-1" type="button">
+                                <div class="form-check m-1 ps-1 pe-1">
+                                    <img src="/imgs/bear.png" alt="Image of bear">
+                                    <label class="form-check-label" for="bear"></label>
+                                    <span class="fs-6">Bear</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="house">
+                            <input class="form-check-input" type="radio" name="house" id="bison" value="bison">
+                            <button class="btn btn-outline-primary m-1" type="button">
+                                <div class="form-check m-1 ps-1 pe-1">
+                                    <img src="/imgs/bison.png" alt="Image of Bison">
+                                    <label class=" form-check-label" for="bison"></label>
+                                    <span class="fs-6">Bison</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="house">
+                            <input class="form-check-input" type="radio" name="house" id="lynx" value="lynx">
+                            <button class="btn btn-outline-primary m-1" type="button">
+                                <div class="form-check m-1 ps-1 pe-1">
+                                    <img src="/imgs/lynx.png" alt="Image of lynx">
+                                    <label class=" form-check-label" for="lynx"></label>
+                                    <span class="fs-6">Lynx</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="house">
+                            <input class="form-check-input" type="radio" name="house" id="wolf" value="wolf">
+                            <button class="btn btn-outline-primary m-1" type="button">
+                                <div class="form-check m-1 ps-1 pe-1">
+                                    <img src="/imgs/wolf.png" alt="Image of Wolf">
+                                    <label class=" form-check-label" for="wolf"></label>
+                                    <span class="fs-6">Wolf</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="username">Username</label>
+                    <input class="form-control" type="text" id="username" name="username" required>
+                    <div class="valid-feedback">All Good!</div>
+                    <div class="invalid-feedback">Please enter a valid username</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" type="text" id="password" name="password" required>
+                    <div class="valid-feedback">All Good!</div>
+                    <div class="invalid-feedback">Please enter a password</div>
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-success">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>

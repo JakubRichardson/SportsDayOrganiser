@@ -12,6 +12,10 @@ const EventSchema = new mongoose.Schema({
         enum: ["male", "female"],
         required: true
     },
+    limit: {
+        type: Number,
+        min: 0
+    },
     participants: [{
         type: Schema.Types.ObjectId,
         ref: "User"
@@ -20,11 +24,9 @@ const EventSchema = new mongoose.Schema({
 
 EventSchema.post("findOneAndDelete", async function (document) {
     if (document) {
-        await User.deleteMany({
-            _id: {
-                $in: document.participants
-            }
-        })
+        for (let user of document.participants) {
+            await User.findOneAndUpdate({ _id: user }, { $pull: { participating: document._id } });
+        }
     }
 })
 
