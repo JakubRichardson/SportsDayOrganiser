@@ -2,7 +2,6 @@
 
     <div class="row my-3">
         <div class="col-sm-8 offset-sm-2">
-            <!-- <img src="/imgs/hurricanesLogo.jpg" alt="" class="img-thumbnail rounded mb-3" /> -->
             <h5 class="card-title">Register as Teacher</h5>
             <form action="/registerTeacher" method="POST" class="validated-form" novalidate>
                 <div class="mb-3">
@@ -14,15 +13,12 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="username">Username</label>
-                    <input class="form-control" type="text" id="username" name="username" required>
+                    <input class="form-control" type="username" id="username" name="username" required>
                     <div class="valid-feedback">All Good!</div>
                     <div class="invalid-feedback">Please enter a valid username</div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="password">Password</label>
-                    <input class="form-control" type="password" id="password" name="password" required>
-                    <div class="valid-feedback">All Good!</div>
-                    <div class="invalid-feedback">Please enter a password</div>
+                    <%- include("../partials/passwordInput") %>
                 </div>
                 <div class="d-grid">
                     <button class="btn btn-success">Register</button>

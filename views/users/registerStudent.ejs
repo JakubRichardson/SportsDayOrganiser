@@ -19,10 +19,27 @@
                         <div class="invalid-feedback">Please enter a valid surname</div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label class="form-label" for="form">Form group</label>
-                        <input class="form-control" type="text" id="form" name="form" required>
+                        <label class="form-label" for="year">Year group</label>
+                        <select name="year" id="year" class="form-select form-select-md"
+                            aria-label=".form-select-sm example" required>
+                            <option value="-1">Pre-nursery</option>
+                            <option value="0">Nursery</option>
+                            <option value="1">Year 1</option>
+                            <option value="2">Year 2</option>
+                            <option value="3">Year 3</option>
+                            <option value="4">Year 4</option>
+                            <option value="5">Year 5</option>
+                            <option value="6">Year 6</option>
+                            <option value="7" selected>Year 7</option>
+                            <option value="8">Year 8</option>
+                            <option value="9">Year 9</option>
+                            <option value="10">Year 10</option>
+                            <option value="11">Year 11</option>
+                            <option value="12">Year 12</option>
+                            <option value="13">Year 13</option>
+                        </select>
                         <div class="valid-feedback">All Good!</div>
-                        <div class="invalid-feedback">Please enter a valid form group</div>
+                        <div class="invalid-feedback">Please choose a year group</div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label" for="gender">Gender</label>
@@ -82,15 +99,12 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="username">Username</label>
-                    <input class="form-control" type="text" id="username" name="username" required>
+                    <input class="form-control" type="username" id="username" name="username" required>
                     <div class="valid-feedback">All Good!</div>
                     <div class="invalid-feedback">Please enter a valid username</div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="password">Password</label>
-                    <input class="form-control" type="text" id="password" name="password" required>
-                    <div class="valid-feedback">All Good!</div>
-                    <div class="invalid-feedback">Please enter a password</div>
+                    <%- include("../partials/passwordInput") %>
                 </div>
                 <div class="d-grid">
                     <button class="btn btn-success">Register</button>

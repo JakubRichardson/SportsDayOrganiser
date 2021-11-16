@@ -56,6 +56,21 @@
                                 </div>
                                 <p class="card-text mb-1">Participant limit: <%= event.limit ? event.limit : "None" %>
                                 </p>
+                                <span class="mb-1">Signed Up: </span>
+                                <div class="d-flex flex-wrap justify-content-center">
+                                    <btn class="btn btn-light m-2">
+                                        Bear: <%= counted[event._id].bear%>
+                                    </btn>
+                                    <btn class="btn btn-light m-2">
+                                        Bison: <%= counted[event._id].bison %>
+                                    </btn>
+                                    <btn class="btn btn-light m-2">
+                                        Wolf: <%= counted[event._id].wolf %>
+                                    </btn>
+                                    <btn class="btn btn-light m-2">
+                                        Lynx: <%= counted[event._id].lynx %>
+                                    </btn>
+                                </div>
                                 <% if(event.participants.length> 0) { %>
                                     <p class="card-text">Participants - <%= event.participants.length %>:</p>
                                     <ul class="list-group list-group-flush mb-2">
@@ -88,7 +103,11 @@
                                                         <form class="col-auto"
                                                             action="/sportsDays/<%= day._id %>/events/<%= event._id %>"
                                                             method="POST">
-                                                            <button class="btn btn-success">Sign up</button>
+                                                            <button class="btn btn-success"
+                                                                <%=(event.participants.length> 0 ||
+                                                                counted[event._id][signedInUser.house] >=
+                                                                event.limit) ? "disabled" : null
+                                                                %>>Sign up</button>
                                                         </form>
                                                         <% } %>
                                             </div>

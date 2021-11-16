@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const asyncWrapper = require("../utilities/asyncWrapper");
+const countByHouse = require("../utilities/countByHouse");
 
 const SportsDay = require("../models/sportsDay");
 const Event = require("../models/event");
@@ -9,6 +10,7 @@ const TemplateEvent = require("../models/tempEvent");
 const { sportsDaySchema } = require("../schemas.js"); //TODO remove me
 
 const { checkLoggedIn, checkTeacher } = require("../middleware");
+const event = require("../models/event");
 
 router.get("/", asyncWrapper(async (req, res) => {
     const sportsDays = await SportsDay.find({}).populate({ path: "events" });
@@ -34,20 +36,20 @@ router.post("/", checkLoggedIn, checkTeacher, validateSportsDay, asyncWrapper(as
     const newSportsDay = new SportsDay({ name: req.body.name, year: req.body.year, date: req.body.date });
     if (req.body.events) {
         if (req.body.events.male) {
-            for (let id of req.body.events.male) {
-                const template = await TemplateEvent.findById(id);
-                if (template) { // if template id wrong it won't be used and app won't crash
-                    const event = new Event({ name: template.name, gender: "male" });
+            for (let templateEvent of req.body.events.male) {
+                const template = await TemplateEvent.findById(templateEvent.id);
+                if (template) {
+                    const event = new Event({ name: template.name, limit: templateEvent.limit, gender: "male" });
                     await event.save(); // doesn't need await
                     newSportsDay.events.push(event);
                 }
             }
         }
         if (req.body.events.female) {
-            for (let id of req.body.events.female) {
-                const template = await TemplateEvent.findById(id);
+            for (let templateEvent of req.body.events.female) {
+                const template = await TemplateEvent.findById(templateEvent.id);
                 if (template) { // if template id wrong it won't be used and app won't crash
-                    const event = new Event({ name: template.name, gender: "female" });
+                    const event = new Event({ name: template.name, limit: templateEvent.limit, gender: "female" });
                     await event.save(); // doesn't need await
                     newSportsDay.events.push(event);
                 }
@@ -64,18 +66,25 @@ router.post("/", checkLoggedIn, checkTeacher, validateSportsDay, asyncWrapper(as
 router.get("/:id", checkLoggedIn, asyncWrapper(async (req, res) => {
     const { id } = req.params;
 
-    let populateObj = { path: "participants", match: { _id: req.user._id } };
     let genderQuery = { gender: req.user.gender };
-    if (req.user.teacher === true) {
-        populateObj = { path: "participants" }
-        genderQuery = {};
-    }
+    if (req.user?.teacher === true) genderQuery = {};
 
     const sportsDay = await SportsDay.findById(id).populate({
         path: 'events',
         match: genderQuery,
-        populate: populateObj
+        populate: { path: "participants" }
     })
+    const counted = {};
+    for (let event of sportsDay.events) {
+        counted[event._id] = countByHouse(event.participants);
+    }
+    if (req.user?.teacher !== true) {
+        await sportsDay.populate({
+            path: 'events',
+            match: genderQuery,
+            populate: { path: "participants", match: { _id: req.user._id } }
+        })
+    }
 
     //todo
     // if (!sportsDay) {
@@ -83,7 +92,8 @@ router.get("/:id", checkLoggedIn, asyncWrapper(async (req, res) => {
     //     return res.redirect("/campgrounds");
     // }
 
-    res.render("sportsDays/show", { day: sportsDay });
+
+    res.render("sportsDays/show", { day: sportsDay, counted });
 }))
 
 router.get("/:id/edit", checkLoggedIn, checkTeacher, async (req, res) => {

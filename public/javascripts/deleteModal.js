@@ -1,8 +1,6 @@
 
 const deleteButtons = document.querySelectorAll("button[data-bs-toggle='modal']");
-console.log(deleteButtons)
 const modal = document.querySelector("div.modal");
-console.log(modal);
 const deleteName = modal.querySelector("span[data-delete-name]");
 const deleteForm = modal.querySelector("form");
 deleteButtons.forEach(btn => {

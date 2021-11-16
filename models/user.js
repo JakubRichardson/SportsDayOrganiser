@@ -9,8 +9,10 @@ const UserSchema = new Schema({
     surname: {
         type: String
     },
-    form: {
-        type: String
+    year: {
+        type: Number,
+        max: 13,
+        min: -1
     },
     house: {
         type: String,

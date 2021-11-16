@@ -1,15 +1,10 @@
-move show page stylesheet
 event show even columns
 error page and form errors
 validation returnTo
 dissalow additional joi
-error handling
-custom add to template button
 ?most popular in navbar
-Add flash
 list groups with more - can use table
 implement event sort
-when deleting remove all array aswell
 make show more on lists
 nicer scrollbar
 sanitation
@@ -30,6 +25,7 @@ https://www.flaticon.com/premium-icon/wolf_3359935?term=wolf&page=1&position=53&
 https://www.flaticon.com/free-icon/bear_185736
 https://www.flaticon.com/free-icon/lynx_185740
 https://www.flaticon.com/free-icon/bison_185749
+eye svgs from bootstrap icons
 validateForms.js file
 
 Project requirements:
@@ -42,7 +38,7 @@ Project requirements:
 6. Students able to sign up for events using name and house
 7. Form data is validated client-side and server side
 8. Login System so only teachers can delete events
-?9. print signed up for sports day
+?9. Make spreadsheet of signed up students for sports days
 9. Scoring pages for specific events
 
 
@@ -59,15 +55,20 @@ master password
 only view your year group
 username and password change?
 
+Meetings:
+
 Meeting 10/21/2021 asking about year groups
+
 Meeting 11/9/2021 feedback, found out need to hide students data
-
-
 firstname surname and form
 only singing up
 show number signed up not names
 only teacher see names and be able to remove them
 max number from a certian house
+
+Meeting 11/10/2021 show progress found out excel sheet is desired and year group is ok
+
+
 
 username validation so no duplicate
 https
@@ -78,7 +79,13 @@ validate user routes
 login fail
 only view your year group
 filters male/female track/field
-settings
 unsignup
 page settings
-delete account
+
+change validate functions to be more reusable
+change year group on sports days
+
+by changing house after signing up you can exceed the number people for an event
+create separate teacher and user show pages
+edit event page
+change new page to card layout - table is disaster

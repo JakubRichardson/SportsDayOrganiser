@@ -20,11 +20,16 @@
             </div>
             <p class="fs-5">Delete Account</p>
             <div class="mb-3">
-                <form action="/deleteAccount?_method=DELETE" method="post">
-                    <div class="d-grid">
-                        <button class="btn btn-danger">Delete Account</button>
-                    </div>
-                </form>
+                <div class="d-grid">
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-name="your account" data-submit-to="/deleteAccount">
+                        Delete
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+
+    <%- include("../partials/deleteModal") %>
+
+        <script src="/javascripts/deleteModal.js"></script>

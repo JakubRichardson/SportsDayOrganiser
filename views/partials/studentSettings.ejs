@@ -19,17 +19,34 @@
     </div>
     <div class="row">
         <div class="col-md-6 mb-3">
-            <label class="form-label" for="form">Form group</label>
-            <input class="form-control" type="text" id="form" name="form" value="<%= signedInUser.form %>" required>
+            <label class="form-label" for="year">Year group</label>
+            <select name="year" id="year" class="form-select form-select-md" aria-label=".form-select-sm example"
+                required>
+                <option value="-1" <%=(signedInUser.year===-1 ) ? "selected" : "" %>>Pre-nursery</option>
+                <option value="0" <%=(signedInUser.year===0 ) ? "selected" : "" %>>Nursery</option>
+                <option value="1" <%=(signedInUser.year===1 ) ? "selected" : "" %>>Year 1</option>
+                <option value="2" <%=(signedInUser.year===2 ) ? "selected" : "" %>>Year 2</option>
+                <option value="3" <%=(signedInUser.year===3 ) ? "selected" : "" %>>Year 3</option>
+                <option value="4" <%=(signedInUser.year===4 ) ? "selected" : "" %>>Year 4</option>
+                <option value="5" <%=(signedInUser.year===5 ) ? "selected" : "" %>>Year 5</option>
+                <option value="6" <%=(signedInUser.year===6 ) ? "selected" : "" %>>Year 6</option>
+                <option value="7" <%=(signedInUser.year===7 ) ? "selected" : "" %>>Year 7</option>
+                <option value="8" <%=(signedInUser.year===8 ) ? "selected" : "" %>>Year 8</option>
+                <option value="9" <%=(signedInUser.year===9 ) ? "selected" : "" %>>Year 9</option>
+                <option value="10" <%=(signedInUser.year===10 ) ? "selected" : "" %>>Year 10</option>
+                <option value="11" <%=(signedInUser.year===11 ) ? "selected" : "" %>>Year 11</option>
+                <option value="12" <%=(signedInUser.year===12 ) ? "selected" : "" %>>Year 12</option>
+                <option value="13" <%=(signedInUser.year===-13 ) ? "selected" : "" %>>Year 13</option>
+            </select>
             <div class="valid-feedback">All Good!</div>
-            <div class="invalid-feedback">Please enter a valid form group</div>
+            <div class="invalid-feedback">Please choose a year group</div>
         </div>
         <div class="col-md-6 mb-3">
             <label class="form-label" for="gender">Gender</label>
             <select name="gender" id="gender" class="form-select form-select-md" aria-label=".form-select-sm example"
                 required>
-                <option value="male" <%=(signedInUser.gender==="male" ) ? "selected" : null %> >Male</option>
-                <option value="female" <%=(signedInUser.gender==="female" ) ? "selected" : null %>>Female</option>
+                <option value="male" <%=(signedInUser.gender==="male" ) ? "selected" : "" %> >Male</option>
+                <option value="female" <%=(signedInUser.gender==="female" ) ? "selected" : "" %>>Female</option>
             </select>
             <div class="valid-feedback">All Good!</div>
             <div class="invalid-feedback">Please choose a gender</div>
@@ -38,50 +55,22 @@
     House
     <div class="d-flex justify-content-center">
         <div class="d-flex flex-wrap mb-3">
-            <div class="house">
-                <input class="form-check-input" type="radio" name="house" id="bear" value="bear"
-                    <%=(signedInUser.house==="bear" ) ? "checked" : null %> >
-                <button class="btn btn-outline-primary m-1" type="button">
-                    <div class="form-check m-1 ps-1 pe-1">
-                        <img src="/imgs/bear.png" alt="Image of bear">
-                        <label class="form-check-label" for="bear"></label>
-                        <span class="fs-6">Bear</span>
-                    </div>
-                </button>
-            </div>
-            <div class="house">
-                <input class="form-check-input" type="radio" name="house" id="bison" value="bison"
-                    <%=(signedInUser.house==="bison" ) ? "checked" : null %>>
-                <button class="btn btn-outline-primary m-1" type="button">
-                    <div class="form-check m-1 ps-1 pe-1">
-                        <img src="/imgs/bison.png" alt="Image of Bison">
-                        <label class=" form-check-label" for="bison"></label>
-                        <span class="fs-6">Bison</span>
-                    </div>
-                </button>
-            </div>
-            <div class="house">
-                <input class="form-check-input" type="radio" name="house" id="lynx"
-                    value="lynx <%=(signedInUser.house===" lynx" ) ? "checked" : null %>">
-                <button class="btn btn-outline-primary m-1" type="button">
-                    <div class="form-check m-1 ps-1 pe-1">
-                        <img src="/imgs/lynx.png" alt="Image of lynx">
-                        <label class=" form-check-label" for="lynx"></label>
-                        <span class="fs-6">Lynx</span>
-                    </div>
-                </button>
-            </div>
-            <div class="house">
-                <input class="form-check-input" type="radio" name="house" id="wolf" value="wolf"
-                    <%=(signedInUser.house==="wolf" ) ? "checked" : null %>>
-                <button class="btn btn-outline-primary m-1" type="button">
-                    <div class="form-check m-1 ps-1 pe-1">
-                        <img src="/imgs/wolf.png" alt="Image of Wolf">
-                        <label class=" form-check-label" for="wolf"></label>
-                        <span class="fs-6">Wolf</span>
-                    </div>
-                </button>
-            </div>
+            <% const houses=["bear", "bison" , "wolf" , "lynx" ]; for (let house of houses) { const
+                checked=(signedInUser.house===house ) ? "checked" : "" ; %>
+                <div class="house">
+                    <input class="form-check-input" type="radio" name="house" id="<%= house %>" value="<%= house %>"
+                        <%=checked %>>
+                    <button class="btn btn-outline-primary m-1" type="button">
+                        <div class="form-check m-1 ps-1 pe-1">
+                            <img src="/imgs/<%= house %>.png" alt="Image of <%= house%>">
+                            <label class="form-check-label" for="<%= house %>"></label>
+                            <span class="fs-6">
+                                <%= house[0].toUpperCase() + house.slice(1) %>
+                            </span>
+                        </div>
+                    </button>
+                </div>
+                <% } %>
         </div>
     </div>
     <div class="d-grid">

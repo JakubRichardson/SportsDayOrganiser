@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const asyncWrapper = require("../utilities/asyncWrapper");
+const countByHouse = require("../utilities/countByHouse");
 
 const SportsDay = require("../models/sportsDay");
 const Event = require("../models/event");
@@ -17,6 +18,7 @@ router.get("/new", checkLoggedIn, checkTeacher, asyncWrapper(async (req, res) =>
 }))
 
 const validateEvent = (req, res, next) => {
+    console.log(req.body)
     const { error } = eventSchema.validate(req.body);
     if (error) {
         const text = error.details.map(ind => ind.message).join(", ");
@@ -46,12 +48,17 @@ router.post("/", checkLoggedIn, checkTeacher, validateEvent, asyncWrapper(async 
 router.get("/:eventId", checkLoggedIn, asyncWrapper(async (req, res) => {
     const { id, eventId } = req.params;
     const sportsDay = await SportsDay.findById(id);
+
+    const event = await Event.findById(eventId).populate("participants", "house");
+    const counted = countByHouse(event.participants);
+
     let populateObj = { path: "participants", match: { _id: req.user._id } };
     if (req.user?.teacher === true) {
         populateObj = { path: "participants" }
     }
-    const event = await Event.findById(eventId).populate(populateObj);
-    res.render("events/show", { day: sportsDay, event });
+    await event.populate(populateObj);
+
+    res.render("events/show", { day: sportsDay, event, counted });
 }))
 
 router.delete("/:eventId", checkLoggedIn, checkTeacher, asyncWrapper(async (req, res) => {

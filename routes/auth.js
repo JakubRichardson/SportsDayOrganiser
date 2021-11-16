@@ -67,8 +67,8 @@ router.get("/registerStudent", (req, res) => {
 })
 
 router.post("/registerStudent", validateStudent, asyncWrapper(async (req, res) => {
-    const { name, surname, form, house, gender, username, password } = req.body;
-    const user = new User({ teacher: false, name, surname, form, house, gender, username });
+    const { name, surname, year, house, gender, username, password } = req.body;
+    const user = new User({ teacher: false, name, surname, year, house, gender, username });
     const registeredUser = await User.register(user, password);
 
     req.login(registeredUser, err => {
@@ -79,10 +79,10 @@ router.post("/registerStudent", validateStudent, asyncWrapper(async (req, res) =
     res.redirect("/sportsDays");
 }))
 
-router.put("/updateStudent", checkLoggedIn, validateStudentNoPass, asyncWrapper(async (req, res) => {
+router.put("/updateStudent", checkLoggedIn, validateStudentNoPass, async (req, res) => {
     const student = await User.findByIdAndUpdate(req.user._id, req.body, { runValidators: true, new: true });
     res.redirect("/sportsDays")
-}))
+})
 
 router.get("/registerTeacher", (req, res) => {
     res.render("users/registerTeacher")

@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const asyncWrapper = require("../utilities/asyncWrapper");
+const countByHouse = require("../utilities/countByHouse");
 
 const Event = require("../models/event");
 const User = require("../models/user");
 
 const { checkLoggedIn, hasPermission, checkStudent } = require("../middleware");
 
-router.post("/", checkLoggedIn, checkStudent, (async (req, res) => {
+router.post("/", checkLoggedIn, checkStudent, asyncWrapper(async (req, res) => {
     const { id, eventId } = req.params;
     const event = await Event.findById(eventId);
     if (event.gender !== req.user.gender) {
@@ -16,6 +17,12 @@ router.post("/", checkLoggedIn, checkStudent, (async (req, res) => {
     }
     if (event.participants.includes(req.user._id)) {
         req.flash("fail", `You have already signed up for ${event.name}!`);
+        return res.redirect(`/sportsDays/${id}/events/${eventId}`);
+    }
+    await event.populate("participants", "house");
+    const counted = countByHouse(event.participants);
+    if (counted[req.user.house] >= event.limit) {
+        req.flash("fail", `Sorry, the event limit of ${event.limit} students per house has already been reached!`);
         return res.redirect(`/sportsDays/${id}/events/${eventId}`);
     }
     const user = await User.findById(req.user._id);
@@ -32,7 +39,7 @@ router.post("/", checkLoggedIn, checkStudent, (async (req, res) => {
 
 router.delete("/:userId", checkLoggedIn, hasPermission, asyncWrapper(async (req, res) => {
     const { id, eventId, userId } = req.params;
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(userId);
     const event = await Event.findById(eventId);
     event.participants.pull({ _id: userId });
     await event.save();

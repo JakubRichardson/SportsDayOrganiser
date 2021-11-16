@@ -9,19 +9,34 @@
             Event: <%= event.name %>
         </h3>
         <h4 class="col-md-8">
-            Gender: <%= event.gender %>
+            Gender: <%= event.gender[0].toUpperCase() + event.gender.slice(1) %>
         </h4>
     </div>
+    <div class="d-flex flex-wrap">
+        <span class="fs-5 m-2 ms-0">Signed Up: </span>
+        <btn class="btn btn-light m-2">
+            Bear: <%= counted.bear%>
+        </btn>
+        <btn class="btn btn-light m-2">
+            Bison: <%= counted.bison %>
+        </btn>
+        <btn class="btn btn-light m-2">
+            Wolf: <%= counted.wolf %>
+        </btn>
+        <btn class="btn btn-light m-2">
+            Lynx: <%= counted.lynx %>
+        </btn>
+    </div>
     <div>
-        <h4 class="card-text">Participant limit - <%= event.limit ? event.limit : "None" %>
-        </h4>
+        <div class="fs-4">Participant limit - <%= event.limit ? event.limit : "None" %>
+        </div>
         <% if(event.participants.length> 0) { %>
             <h4 class="card-text">Participants - <%= event.participants.length %>: </h4>
             <ul class="list-group mb-2">
                 <% for(let participant of event.participants) { %>
                     <li class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
                         <div class="m-2 m-md-0">
-                            Name: <%= participant.username %>
+                            Name: <%= participant.name %>
                         </div>
                         <div class="m-2 m-md-0">
                             House: <%= participant.house[0].toUpperCase() + participant.house.slice(1) %>
@@ -42,7 +57,9 @@
     <% if(signedInUser && !signedInUser.teacher) { %>
         <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>" method="POST">
             <div class="mb-3">
-                <button class="btn btn-success">Sign Up</button>
+                <button class="btn btn-success" <%=(event.participants.length> 0 || counted[signedInUser.house] >=
+                    event.limit) ? "disabled" : null
+                    %>>Sign Up</button>
             </div>
         </form>
         <% } %>

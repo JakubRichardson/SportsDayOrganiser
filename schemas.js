@@ -1,12 +1,17 @@
 const Joi = require("joi");
 
+const template = Joi.object({
+  id: Joi.string(),
+  limit: Joi.number().empty("").integer().min(0)
+})
+
 module.exports.sportsDaySchema = Joi.object({
   name: Joi.string().required(),
   year: Joi.number().integer().min(1).max(13).required(),
   date: Joi.date().required(),
   events: Joi.object({
-    male: Joi.array().items(Joi.string()),
-    female: Joi.array().items(Joi.string())
+    male: Joi.array().items(template),
+    female: Joi.array().items(template)
   })
 }).required();
 
@@ -17,29 +22,27 @@ module.exports.eventSchema = Joi.object({
   template: Joi.string().valid("true"),
 }).required();
 
-module.exports.studentSchema = Joi.object({
-  name: Joi.string().required(),
-  surname: Joi.string().required(),
-  form: Joi.string().required(),
-  house: Joi.string().valid("bison", "wolf", "bear", "lynx").required(),
-  gender: Joi.string().valid("male", "female").required(),
+const userAndPass = Joi.object({
   username: Joi.string().required(),
-  password: Joi.string().required(),
+  password: Joi.string().required()
 }).required()
 
 module.exports.studentSchemaNoPass = Joi.object({
   name: Joi.string().required(),
   surname: Joi.string().required(),
-  form: Joi.string().required(),
+  year: Joi.number().integer().min(-1).max(13).required(),
   house: Joi.string().valid("bison", "wolf", "bear", "lynx").required(),
-  gender: Joi.string().valid("male", "female").required(),
+  gender: Joi.string().valid("male", "female").required()
 }).required()
 
-module.exports.teacherSchema = Joi.object({
-  username: Joi.string().required(),
-  password: Joi.string().required(),
+
+module.exports.studentSchema = this.studentSchemaNoPass.concat(userAndPass);
+
+const teacherBase = Joi.object({
   masterPassword: Joi.string().required()
 }).required()
+
+module.exports.teacherSchema = teacherBase.concat(userAndPass);
 
 /*
 {
