@@ -26,6 +26,7 @@ https://www.flaticon.com/free-icon/bear_185736
 https://www.flaticon.com/free-icon/lynx_185740
 https://www.flaticon.com/free-icon/bison_185749
 eye svgs from bootstrap icons
+cross svg from bootstrap icons
 validateForms.js file
 
 Project requirements:
@@ -67,6 +68,7 @@ only teacher see names and be able to remove them
 max number from a certian house
 
 Meeting 11/10/2021 show progress found out excel sheet is desired and year group is ok
+change new page to card layout - table is disaster - feedback to be fool proof - feedback add clear button
 
 
 
@@ -88,4 +90,4 @@ change year group on sports days
 by changing house after signing up you can exceed the number people for an event
 create separate teacher and user show pages
 edit event page
-change new page to card layout - table is disaster
+allow empty participant limit

@@ -18,7 +18,7 @@ module.exports.sportsDaySchema = Joi.object({
 module.exports.eventSchema = Joi.object({
   name: Joi.string().required(),
   gender: Joi.string().valid("male", "female").required(),
-  limit: Joi.number().integer().min(1),
+  limit: Joi.number().integer().min(1).empty(""),
   template: Joi.string().valid("true"),
 }).required();
 

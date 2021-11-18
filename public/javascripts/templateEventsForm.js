@@ -64,31 +64,19 @@ selectAllCheck.onclick = () => {
     otherToggler();
 };
 
-maleLimit.addEventListener("input", () => {
-    limits.male.forEach(limit => {
+function limitToggler(limits, check) {
+    limits.forEach(limit => {
         if (limit.disabled === false) {
-            limit.value = maleLimit.value;
+            limit.value = check.value;
         }
     })
-})
+}
 
-femaleLimit.addEventListener("input", () => {
-    limits.female.forEach(limit => {
-        if (limit.disabled === false) {
-            limit.value = femaleLimit.value;
-        }
-    })
-})
+maleLimit.addEventListener("input", limitToggler(limits.male, maleLimit));
+femaleLimit.addEventListener("input", limitToggler(limits.female, femaleLimit))
+
 
 allLimit.addEventListener("input", () => {
-    limits.male.forEach(limit => {
-        if (limit.disabled === false) {
-            limit.value = allLimit.value;
-        }
-    })
-    limits.female.forEach(limit => {
-        if (limit.disabled === false) {
-            limit.value = allLimit.value;
-        }
-    })
+    limitToggler(limits.male, allLimit)
+    limitToggler(limits.female, allLimit)
 })

@@ -6,8 +6,13 @@
             <form action="/registerTeacher" method="POST" class="validated-form" novalidate>
                 <div class="mb-3">
                     <label class="form-label" for="masterPassword">Teacher Registration Password</label>
-                    <input class="form-control" type="password" id="masterPassword" name="masterPassword" autofocus
-                        required>
+                    <div class="input-group">
+                        <input class="form-control" type="password" id="masterPassword" name="masterPassword" autofocus
+                            required>
+                        <span class="input-group-text password-toggle" style="cursor:pointer;">
+                            <img src="/imgs/closedEye.svg" alt="">
+                        </span>
+                    </div>
                     <div class="valid-feedback">All Good!</div>
                     <div class="invalid-feedback">Please enter the teacher registration password</div>
                 </div>

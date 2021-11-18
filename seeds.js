@@ -59,7 +59,7 @@ const templateEvents = [
     { name: "Long jump" },
     { name: "Triple jump" },
     { name: "High jump" },
-    { name: "4x100m relay" }
+    { name: "4x100m relay", limit: 4 }
 ]
 
 const seedDB = async () => {

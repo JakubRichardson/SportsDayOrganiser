@@ -18,7 +18,6 @@ router.get("/new", checkLoggedIn, checkTeacher, asyncWrapper(async (req, res) =>
 }))
 
 const validateEvent = (req, res, next) => {
-    console.log(req.body)
     const { error } = eventSchema.validate(req.body);
     if (error) {
         const text = error.details.map(ind => ind.message).join(", ");
