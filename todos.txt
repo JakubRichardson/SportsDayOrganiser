@@ -91,3 +91,4 @@ by changing house after signing up you can exceed the number people for an event
 create separate teacher and user show pages
 edit event page
 allow empty participant limit
+only own gender on index

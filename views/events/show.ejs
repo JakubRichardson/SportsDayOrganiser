@@ -1,80 +1,123 @@
 <% layout("layouts/boilerplate") %>
 
-    <link rel="stylesheet" href="/stylesheets/houses.css">
-    <h1>
-        <%= day.name %>
-    </h1>
-    <div class="row">
-        <h3 class="col-md-4">
-            Event: <%= event.name %>
-        </h3>
-        <h4 class="col-md-8">
-            Gender: <%= event.gender[0].toUpperCase() + event.gender.slice(1) %>
-        </h4>
-    </div>
-    <div class="d-flex flex-wrap">
-        <span class="fs-5 m-2 ms-0">Signed Up: </span>
-        <btn class="btn btn-light m-2">
-            Bear: <%= counted.bear%>
-        </btn>
-        <btn class="btn btn-light m-2">
-            Bison: <%= counted.bison %>
-        </btn>
-        <btn class="btn btn-light m-2">
-            Wolf: <%= counted.wolf %>
-        </btn>
-        <btn class="btn btn-light m-2">
-            Lynx: <%= counted.lynx %>
-        </btn>
-    </div>
-    <div>
-        <div class="fs-4">Participant limit - <%= event.limit ? event.limit : "None" %>
-        </div>
-        <% if(event.participants.length> 0) { %>
-            <h4 class="card-text">Participants - <%= event.participants.length %>: </h4>
-            <ul class="list-group mb-2">
-                <% for(let participant of event.participants) { %>
-                    <li class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
-                        <div class="m-2 m-md-0">
-                            Name: <%= participant.name %>
-                        </div>
-                        <div class="m-2 m-md-0">
-                            House: <%= participant.house[0].toUpperCase() + participant.house.slice(1) %>
-                        </div>
-                        <form
-                            action="/sportsDays/<%= day._id %>/events/<%= event._id %>/<%= participant._id %>?_method=DELETE"
-                            method="POST" class="m-2 m-md-0">
-                            <button class="btn btn-danger btn-sm ml-auto">Remove</button>
-                        </form>
-                    </li>
-                    <% } %>
-            </ul>
-            <% } else { %>
-                <div class="mb-3 fs-2">No participants yet!</div>
-                <% } %>
-    </div>
-
-    <% if(signedInUser && !signedInUser.teacher) { %>
-        <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>" method="POST">
-            <div class="mb-3">
-                <button class="btn btn-success" <%=(event.participants.length> 0 || counted[signedInUser.house] >=
-                    event.limit) ? "disabled" : null
-                    %>>Sign Up</button>
+<link rel="stylesheet" href="/stylesheets/houses.css">
+<h1>
+    <%= day.name %>
+</h1>
+<div class="row">
+    <h3 class="col-md-4">
+        Event: <%= event.name %>
+    </h3>
+    <h4 class="col-md-8">
+        Gender: <%= event.gender[0].toUpperCase() + event.gender.slice(1) %>
+    </h4>
+</div>
+<div class="fs-4">Participant limit per house: <%= event.limit ? event.limit : "None" %></div>
+<div class="d-flex flex-wrap">
+    <span class="fs-5 m-2 ms-0">Signed Up: </span>
+    <btn class="btn btn-light m-2">
+        Bear: <%= counted.bear %>
+    </btn>
+    <btn class="btn btn-light m-2">
+        Bison: <%= counted.bison %>
+    </btn>
+    <btn class="btn btn-light m-2">
+        Wolf: <%= counted.wolf %>
+    </btn>
+    <btn class="btn btn-light m-2">
+        Lynx: <%= counted.lynx %>
+    </btn>
+</div>
+<div>
+    <% if(signedInUser) { %>
+    <% if(signedInUser.teacher===true) { %>
+    <% if(event.participants.length> 0) { %>
+    <div class=" fs-4">Participants - <%= event.participants.length %>: </div>
+    <ul class="list-group mb-2">
+        <% for(let participant of event.participants) { %>
+        <li class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
+            <div class="m-2 m-md-0">
+                Name: <%= participant.name %>
             </div>
-        </form>
+            <div class="m-2 m-md-0">
+                House: <%= participant.house[0].toUpperCase() + participant.house.slice(1) %>
+            </div>
+            <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>/<%= participant._id %>?_method=DELETE"
+                method="POST" class="m-2 m-md-0">
+                <button class="btn btn-danger btn-sm ml-auto">Remove</button>
+            </form>
+        </li>
         <% } %>
-
-
-
-            <div class="row mb-3">
-                <% if(signedInUser && signedInUser.teacher===true) { %>
-                    <form class="col-auto" action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE"
-                        method="POST">
-                        <button class="btn btn-danger">Delete Event</button>
-                    </form>
-                    <% }%>
-
-                        <form class="col-auto" action="/sportsDays/<%= day._id %>">
-                            <button class="btn btn-primary">Back to <%= day.name %></button>
-                        </form>
+    </ul>
+    <% } else { %>
+    <div class="mb-3 fs-2">No participants yet!</div>
+    <% } %>
+    <% } else { %>
+    <% if(event.participants.length> 0) { %>
+    <ul class="list-group mb-2">
+        <% for(let participant of event.participants) { %>
+        <li class="list-group-item list-group-item-success d-flex flex-wrap justify-content-between mb-1">
+            <div class="m-2 m-md-0">
+                You have signed up for this event!
             </div>
+        </li>
+        <li class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
+            <div class="m-2 m-md-0">
+                Name: <%= participant.name %>
+            </div>
+            <div class="m-2 m-md-0">
+                House: <%= participant.house[0].toUpperCase() + participant.house.slice(1) %>
+            </div>
+            <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>/<%= participant._id %>?_method=DELETE"
+                method="POST" class="m-2 m-md-0">
+                <button class="btn btn-danger btn-sm ml-auto">Remove</button>
+            </form>
+        </li>
+        <% } %>
+    </ul>
+    <% } else { %>
+    <% const limit = event.limit ? event.limit: Infinity; if(counted[signedInUser.house] < limit) { %>
+    <ul class="list-group mb-2">
+        <li class="list-group-item list-group-item-primary d-flex flex-wrap justify-content-between mb-1">
+            <div class="m-2 m-md-0">
+                You can sign up for this event!
+            </div>
+        </li>
+    </ul>
+    <% } else { %>
+    <ul class="list-group mb-2">
+        <li class="list-group-item list-group-item-danger d-flex flex-wrap justify-content-between mb-1">
+            <div class="m-2 m-md-0">
+                Sorry, the participant limit for your house has been reached!
+            </div>
+        </li>
+    </ul>
+    <% } %>
+    <% } %>
+    <% } %>
+    <% } %>
+</div>
+
+<% if(signedInUser && !signedInUser.teacher) { %>
+<form action="/sportsDays/<%= day._id %>/events/<%= event._id %>" method="POST">
+    <div class="mb-3">
+        <button class="btn btn-success"
+            <%=(event.participants.length> 0 || counted[signedInUser.house] >= event.limit) ? "disabled" : null %>>Sign
+            Up</button>
+    </div>
+</form>
+<% } %>
+
+
+
+<div class="row mb-3">
+    <% if(signedInUser && signedInUser.teacher===true) { %>
+    <form class="col-auto" action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger">Delete Event</button>
+    </form>
+    <% }%>
+
+    <form class="col-auto" action="/sportsDays/<%= day._id %>">
+        <button class="btn btn-primary">Back to <%= day.name %></button>
+    </form>
+</div>

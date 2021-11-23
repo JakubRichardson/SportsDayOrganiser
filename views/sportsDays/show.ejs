@@ -1,153 +1,182 @@
 <% layout("layouts/boilerplate") %>
 
-    <h1>
-        <%= day.name %>
-    </h1>
-    <div class="row">
-        <h5 class="col-md-6">
-            Year: <%= day.year %>
-        </h5>
-        <h5 class="col-md-6">
-            Date: <%= day.date.toDateString() %>
-        </h5>
-    </div>
-    <div class="row">
-        <div class="col-md-6 mb-3">
-            <div class="row">
-                <h3 class="col">Events - <span data-num-events>
-                        <%= day.events.length %>
-                    </span>:</h3>
-                <% if(signedInUser && signedInUser.teacher===true) { %>
-                    <div class="btn-group col" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="eventSort" id="all" autocomplete="off"
-                            data-all-radio checked>
-                        <label class="btn btn-outline-primary" for="all">All</label>
-                        <input type="radio" class="btn-check" name="eventSort" id="male" data-male-radio
-                            autocomplete="off">
-                        <label class="btn btn-outline-primary" for="male">Male</label>
-                        <input type="radio" class="btn-check" name="eventSort" id="female" data-female-radio
-                            autocomplete="off">
-                        <label class="btn btn-outline-primary" for="female">Female</label>
-                    </div>
-                    <% } %>
+<h1>
+    <%= day.name %>
+</h1>
+<div class="row">
+    <h5 class="col-md-6">
+        Year: <%= day.year %>
+    </h5>
+    <h5 class="col-md-6">
+        Date: <%= day.date.toDateString() %>
+    </h5>
+</div>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="row">
+            <h3 class="col">Events - <span data-num-events>
+                    <%= day.events.length %>
+                </span>:</h3>
+            <% if(signedInUser && signedInUser.teacher===true) { %>
+            <div class="btn-group col" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="eventSort" id="all" autocomplete="off" data-all-radio
+                    checked>
+                <label class="btn btn-outline-primary" for="all">All</label>
+                <input type="radio" class="btn-check" name="eventSort" id="male" data-male-radio autocomplete="off">
+                <label class="btn btn-outline-primary" for="male">Male</label>
+                <input type="radio" class="btn-check" name="eventSort" id="female" data-female-radio autocomplete="off">
+                <label class="btn btn-outline-primary" for="female">Female</label>
             </div>
+            <% } %>
         </div>
-        <% if(signedInUser && signedInUser.teacher===true) { %>
-            <div class="col-md-6 mb-3 d-flex align-items-center">
-                <a class="btn btn-success" href="/sportsDays/<%= day._id %>/events/new">New Event</a>
-            </div>
-            <% } %>
     </div>
-    <div class="row">
-        <% if(day.events.length> 0) { %>
-            <% for(let event of day.events) { %>
-                <div class="col-md-6 mb-3" data-card-container data-card-gender="<%= event.gender %>">
-                    <a class="text-decoration-none text-reset"
-                        href="/sportsDays/<%= day._id %>/events/<%= event._id %>">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <h5 class="card-title col-md-6">
-                                        <%= event.name %>
-                                    </h5>
-                                    <div class="col-md-6 text-md-end">
-                                        <%= event.gender[0].toUpperCase() + event.gender.slice(1) %>
-                                    </div>
-                                </div>
-                                <p class="card-text mb-1">Participant limit per house: <%= event.limit ? event.limit
-                                        : "None" %>
-                                </p>
-                                <span class="mb-1">Signed Up: </span>
-                                <div class="d-flex flex-wrap justify-content-center">
-                                    <btn class="btn btn-light m-2">
-                                        Bear: <%= counted[event._id].bear%>
-                                    </btn>
-                                    <btn class="btn btn-light m-2">
-                                        Bison: <%= counted[event._id].bison %>
-                                    </btn>
-                                    <btn class="btn btn-light m-2">
-                                        Wolf: <%= counted[event._id].wolf %>
-                                    </btn>
-                                    <btn class="btn btn-light m-2">
-                                        Lynx: <%= counted[event._id].lynx %>
-                                    </btn>
-                                </div>
-                                <% if(event.participants.length> 0) { %>
-                                    <p class="card-text">Participants - <%= event.participants.length %>:</p>
-                                    <ul class="list-group list-group-flush mb-2">
-                                        <% for(let participant of event.participants) { %>
-                                            <li
-                                                class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
-                                                <div class="m-2 m-md-0">
-                                                    Name: <%= participant.username %>
-                                                </div>
-                                            </li>
-                                            <% } %>
-                                    </ul>
-                                    <% } else { %>
-                                        <p class="card-text">No participants yet!</p>
-                                        <% } %>
-                                            <div class="row">
-                                                <div class="col-auto">
-                                                    <button class="btn btn-primary">View more</button>
-                                                </div>
-                                                <% if(signedInUser && signedInUser.teacher===true) { %>
-                                                    <div class="col-auto">
-                                                        <button type="button" class="btn btn-danger"
-                                                            data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                            data-name="<%= event.name %>"
-                                                            data-submit-to="/sportsDays/<%= day._id %>/events/<%= event._id %>">
-                                                            Delete Event
-                                                        </button>
-                                                    </div>
-                                                    <% } else { %>
-                                                        <form class="col-auto"
-                                                            action="/sportsDays/<%= day._id %>/events/<%= event._id %>"
-                                                            method="POST">
-                                                            <button class="btn btn-success"
-                                                                <%=(event.participants.length> 0 ||
-                                                                counted[event._id][signedInUser.house] >=
-                                                                event.limit) ? "disabled" : null
-                                                                %>>Sign up</button>
-                                                        </form>
-                                                        <% } %>
-                                            </div>
-                            </div>
+    <% if(signedInUser && signedInUser.teacher===true) { %>
+    <div class="col-md-6 mb-3 d-flex align-items-center">
+        <a class="btn btn-success" href="/sportsDays/<%= day._id %>/events/new">New Event</a>
+    </div>
+    <% } %>
+</div>
+<div class="row">
+    <% if(day.events.length> 0) { %>
+    <% for(let event of day.events) { %>
+    <div class="col-md-6 mb-3" data-card-container data-card-gender="<%= event.gender %>">
+        <a class="text-decoration-none text-reset" href="/sportsDays/<%= day._id %>/events/<%= event._id %>">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <h5 class="card-title col-md-6">
+                            <%= event.name %>
+                        </h5>
+                        <div class="col-md-6 text-md-end">
+                            <%= event.gender[0].toUpperCase() + event.gender.slice(1) %>
                         </div>
-                    </a>
-                </div>
-                <% } %>
-                    <% } else { %>
-                        <div class="mb-3 fs-2">No Events yet!</div>
-                        <% } %>
-    </div>
-
-    <div class="row mb-3">
-        <% if(signedInUser && signedInUser.teacher===true) { %>
-            <form class="col-auto" action="/sportsDays/<%= day._id %>/edit">
-                <button class="btn btn-warning">Edit</button>
-            </form>
-            <% } %>
-
-                <% if(signedInUser && signedInUser.teacher===true) { %>
-                    <div class="col-auto">
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal" data-name="<%= day.name %>"
-                            data-submit-to="/sportsDays/<%= day._id %>">
-                            Delete
-                        </button>
                     </div>
+                    <p class="card-text mb-1">Participant limit per house: <%= event.limit ? event.limit : "None" %></p>
+                    <span class="mb-1">Signed Up: </span>
+                    <div class="d-flex flex-wrap justify-content-center mb-2">
+                        <btn class="btn btn-light mx-2 mt-2">
+                            Bear: <%= counted[event._id].bear%>
+                        </btn>
+                        <btn class="btn btn-light mx-2 mt-2">
+                            Bison: <%= counted[event._id].bison %>
+                        </btn>
+                        <btn class="btn btn-light mx-2 mt-2">
+                            Wolf: <%= counted[event._id].wolf %>
+                        </btn>
+                        <btn class="btn btn-light mx-2 mt-2">
+                            Lynx: <%= counted[event._id].lynx %>
+                        </btn>
+                    </div>
+                    <% if(signedInUser) { %>
+                    <% if(signedInUser.teacher===true) { %>
+                    <% if(event.participants.length> 0) { %>
+                    <p class="card-text">Participants - <%= event.participants.length %>:
+                    </p>
+                    <ul class="list-group list-group-flush mb-2">
+                        <% for(let participant of event.participants) { %>
+                        <li
+                            class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
+                            <div class="m-2 m-md-0">
+                                Name: <%= participant.username %>
+                            </div>
+                        </li>
+                        <% } %>
+                    </ul>
+                    <% } else { %>
+                    <p class="card-text">No participants yet!</p>
                     <% } %>
-
-                        <form class="col-auto" action="/sportsDays">
-                            <button class="btn btn-primary">All Sports Days</button>
+                    <% } else { %>
+                    <% if(event.participants.length> 0) { %>
+                    <ul class="list-group mb-2">
+                        <% for(let participant of event.participants) { %>
+                        <li
+                            class="list-group-item list-group-item-success d-flex flex-wrap justify-content-between mb-1">
+                            <div class="m-2 m-md-0">
+                                You have signed up for this event!
+                            </div>
+                        </li>
+                        <% } %>
+                    </ul>
+                    <% } else { %>
+                    <% const limit = event.limit ? event.limit: Infinity; if(counted[event._id][signedInUser.house] < limit) { %>
+                    <ul class="list-group mb-2">
+                        <li
+                            class="list-group-item list-group-item-primary d-flex flex-wrap justify-content-between mb-1">
+                            <div class="m-2 m-md-0">
+                                You can sign up for this event!
+                            </div>
+                        </li>
+                    </ul>
+                    <% } else { %>
+                    <ul class="list-group mb-2">
+                        <li
+                            class="list-group-item list-group-item-danger d-flex flex-wrap justify-content-between mb-1">
+                            <div class="m-2 m-md-0">
+                                Sorry, the participant limit for your house has been reached!
+                            </div>
+                        </li>
+                    </ul>
+                    <% } %>
+                    <% } %>
+                    <% } %>
+                    <% } %>
+                    <div class="row">
+                        <div class="col-auto">
+                            <button class="btn btn-primary">View
+                                more</button>
+                        </div>
+                        <% if(signedInUser && signedInUser.teacher===true) { %>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" data-name="<%= event.name %>"
+                                data-submit-to="/sportsDays/<%= day._id %>/events/<%= event._id %>">
+                                Delete Event
+                            </button>
+                        </div>
+                        <% } else { %>
+                        <form class="col-auto" action="/sportsDays/<%= day._id %>/events/<%= event._id %>"
+                            method="POST">
+                            <button class="btn btn-success"
+                                <%=(event.participants.length> 0 || counted[event._id][signedInUser.house] >= event.limit) ? "disabled": null %>>Sign
+                                up</button>
                         </form>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </a>
     </div>
+    <% } %>
+    <% } else { %>
+    <div class="mb-3 fs-2">No Events yet!</div>
+    <% } %>
+</div>
 
+<div class="row mb-3">
+    <% if(signedInUser && signedInUser.teacher===true) { %>
+    <form class="col-auto" action="/sportsDays/<%= day._id %>/edit">
+        <button class="btn btn-warning">Edit</button>
+    </form>
+    <% } %>
 
     <% if(signedInUser && signedInUser.teacher===true) { %>
-        <%- include("../partials/deleteModal") %>
+    <div class="col-auto">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            data-name="<%= day.name %>" data-submit-to="/sportsDays/<%= day._id %>">
+            Delete
+        </button>
+    </div>
+    <% } %>
 
-            <script src="/javascripts/deleteModal.js"></script>
-            <script src="/javascripts/genderFiltering.js"></script>
-            <% } %>
+    <form class="col-auto" action="/sportsDays">
+        <button class="btn btn-primary">All Sports Days</button>
+    </form>
+</div>
+
+
+<% if(signedInUser && signedInUser.teacher===true) { %>
+<%- include("../partials/deleteModal") %>
+
+<script src="/javascripts/deleteModal.js"></script>
+<script src="/javascripts/genderFiltering.js"></script>
+<% } %>

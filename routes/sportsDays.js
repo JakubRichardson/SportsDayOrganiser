@@ -10,7 +10,6 @@ const TemplateEvent = require("../models/tempEvent");
 const { sportsDaySchema } = require("../schemas.js"); //TODO remove me
 
 const { checkLoggedIn, checkTeacher } = require("../middleware");
-const event = require("../models/event");
 
 router.get("/", asyncWrapper(async (req, res) => {
     const sportsDays = await SportsDay.find({}).populate({ path: "events" });
