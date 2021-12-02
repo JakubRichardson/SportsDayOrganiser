@@ -5,18 +5,11 @@ const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const session = require("express-session");
 const flash = require("connect-flash");
-const asyncWrapper = require("./utilities/asyncWrapper");
 const AppError = require("./utilities/AppError");
 const methodOverride = require("method-override");
 const passport = require("passport");
 const passportLocal = require("passport-local");
-
-const SportsDay = require("./models/sportsDay");
-const Event = require("./models/event");
-const TemplateEvent = require("./models/tempEvent");
 const User = require("./models/user");
-
-const { sportsDaySchema, eventSchema, userSchema } = require("./schemas.js"); //TODO remove me
 
 const authRoutes = require("./routes/auth");
 const sportsDayRoutes = require("./routes/sportsDays");

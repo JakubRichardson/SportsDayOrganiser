@@ -71,15 +71,3 @@ module.exports.teacherSchema = teacherBase.concat(userAndPass);
 module.exports.returnToSchema = Joi.object({
   returnTo: Joi.string().required()
 }).required();
-
-/*
-{
-  name: 'Jakub',
-  year: '12',
-  date: '2021-10-15',
-  events: {
-    male: [ '617154dd1bb81320546765ad' ],
-    female: [ '617154dd1bb81320546765ad' ]
-  }
-}
-*/
