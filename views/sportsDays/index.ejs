@@ -1,81 +1,84 @@
 <% layout("layouts/boilerplate") %>
 
-    <div class="row">
-        <div class="col-md-6 mb-3">
-            <h1>All Sports Days</h1>
-        </div>
-        <% if(signedInUser && signedInUser.teacher===true) { %>
-            <div class="col-md-6 mb-3 d-flex align-items-center">
-                <a class="btn btn-success btn-lg" href="/sportsDays/new">New Sports Day</a>
-            </div>
-            <% } %>
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <h1>All Sports Days</h1>
     </div>
-
-    <div class="row">
-        <% if(sportsDays.length> 0) { %>
-            <% for(let day of sportsDays) { %>
-                <div class="col-sm-6 mb-3">
-                    <a class="text-decoration-none text-reset" href="/sportsDays/<%=day._id %>">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row mb-2">
-                                    <h5 class="card-title col-md-6">
-                                        <%= day.name %>
-                                    </h5>
-                                    <div class="col-md-6 text-md-end">
-                                        <%= day.date.toDateString() %>
-                                    </div>
-                                    <div>
-                                        Year: <%= day.year %>
-                                    </div>
-                                </div>
-                                <div class="card-text">
-                                    <% if(day.events.length> 0) { %>
-                                        <p class="card-text mb-1">Events - <%= day.events.length %>: </p>
-                                        <ul class="list-group list-group-flush">
-                                            <% for(let event of day.events) { %>
-                                                <li
-                                                    class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
-                                                    <div class="m-2 m-md-0">
-                                                        <%= event.name %>
-                                                    </div>
-                                                </li>
-                                                <% } %>
-                                        </ul>
-                                        <% } else { %>
-                                            <p class="card-text">No events yet!</p>
-                                            <% } %>
-                                                <!-- <button class="btn btn-primary">Sign up</button> -->
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-auto">
-                                        <button class="btn btn-primary">View more</button>
-                                    </div>
-                                    <% if(signedInUser && signedInUser.teacher===true) { %>
-                                        <form class="col-auto" action="/sportsDays/<%= day._id %>/edit">
-                                            <button class="btn btn-warning">Edit</button>
-                                        </form>
-                                        <div class="col-auto">
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal" data-name="<%= day.name %>"
-                                                data-submit-to="/sportsDays/<%= day._id %>">
-                                                Delete
-                                            </button>
-                                        </div>
-                                        <% } %>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <% } %>
-                    <% } else { %>
-                        <div class="mb-3 fs-2">No Sports Days yet!</div>
-                        <% } %>
-    </div>
-
     <% if(signedInUser && signedInUser.teacher===true) { %>
-        <%- include("../partials/deleteModal") %>
+    <div class="col-md-6 mb-3 d-flex align-items-center">
+        <a class="btn btn-success btn-lg" href="/sportsDays/new">New Sports Day</a>
+    </div>
+    <% } %>
+</div>
 
-            <script src="/javascripts/deleteModal.js"></script>
-            <% } %>
+<div class="row">
+    <% if(sportsDays.length> 0) { %>
+    <% for(let day of sportsDays) { %>
+    <div class="col-sm-6 mb-3">
+        <a class="text-decoration-none text-reset" href="/sportsDays/<%=day._id %>">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <h5 class="card-title col-md-6">
+                            <%= day.name %>
+                        </h5>
+                        <div class="col-md-6 text-md-end">
+                            <%= day.date.toDateString() %>
+                        </div>
+                        <div>
+                            Year: <%= day.year %>
+                        </div>
+                    </div>
+                    <div class="card-text">
+                        <% if(day.events.length> 0) { %>
+                        <p class="card-text mb-1">Events - <%= day.events.length %>: </p>
+                        <ul class="list-group list-group-flush">
+                            <% for(let event of day.events) { %>
+                            <li
+                                class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
+                                <div class="m-2 m-md-0">
+                                    <%= event.name %>
+                                </div>
+                                <div class="m-2 m-md-0">
+                                    <%= event.gender[0].toUpperCase() + event.gender.slice(1) %>
+                                </div>
+                            </li>
+                            <% } %>
+                        </ul>
+                        <% } else { %>
+                        <p class="card-text">No events yet!</p>
+                        <% } %>
+                        <!-- <button class="btn btn-primary">Sign up</button> -->
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-auto">
+                            <button class="btn btn-primary">View more</button>
+                        </div>
+                        <% if(signedInUser && signedInUser.teacher===true) { %>
+                        <form class="col-auto" action="/sportsDays/<%= day._id %>/edit">
+                            <button class="btn btn-warning">Edit</button>
+                        </form>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" data-name="<%= day.name %>"
+                                data-submit-to="/sportsDays/<%= day._id %>">
+                                Delete
+                            </button>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <% } %>
+    <% } else { %>
+    <div class="mb-3 fs-2">No Sports Days yet!</div>
+    <% } %>
+</div>
+
+<% if(signedInUser && signedInUser.teacher===true) { %>
+<%- include("../partials/deleteModal") %>
+
+<script src="/javascripts/deleteModal.js"></script>
+<% } %>

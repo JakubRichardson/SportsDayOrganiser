@@ -39,6 +39,7 @@ router.post("/", checkLoggedIn, checkTeacher, validateSportsDay, asyncWrapper(as
                 const template = await TemplateEvent.findById(templateEvent.id);
                 if (template) {
                     const event = new Event({ name: template.name, limit: templateEvent.limit, gender: "male" });
+                    event.day = newSportsDay;
                     await event.save(); // doesn't need await
                     newSportsDay.events.push(event);
                 }
@@ -49,6 +50,7 @@ router.post("/", checkLoggedIn, checkTeacher, validateSportsDay, asyncWrapper(as
                 const template = await TemplateEvent.findById(templateEvent.id);
                 if (template) { // if template id wrong it won't be used and app won't crash
                     const event = new Event({ name: template.name, limit: templateEvent.limit, gender: "female" });
+                    event.day = newSportsDay;
                     await event.save(); // doesn't need await
                     newSportsDay.events.push(event);
                 }
@@ -90,7 +92,6 @@ router.get("/:id", checkLoggedIn, asyncWrapper(async (req, res) => {
     //     req.flash("error", "Cannot find that Sports Day!")
     //     return res.redirect("/campgrounds");
     // }
-
 
     res.render("sportsDays/show", { day: sportsDay, counted });
 }))

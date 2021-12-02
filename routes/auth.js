@@ -43,7 +43,10 @@ router.get("/settings", checkLoggedIn, (req, res) => {
 })
 
 router.get("/signedUpStudent", checkLoggedIn, checkStudent, asyncWrapper(async (req, res) => {
-    const user = await User.findById(req.user._id).populate({ path: "participating" });
+    const user = await User.findById(req.user._id).populate({
+        path: 'participating',
+        populate: { path: "day", select: "name" }
+    });
     res.render("users/studentEvents", { user })
 }))
 

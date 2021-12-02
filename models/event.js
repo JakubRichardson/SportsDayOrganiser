@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 const User = require("./user");
 
 const EventSchema = new mongoose.Schema({
+    day: {
+        type: Schema.Types.ObjectId,
+        ref: "SportsDay"
+    },
     name: {
         type: String,
         required: true

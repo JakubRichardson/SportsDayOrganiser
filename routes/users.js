@@ -12,17 +12,17 @@ router.post("/", checkLoggedIn, checkStudent, asyncWrapper(async (req, res) => {
     const { id, eventId } = req.params;
     const event = await Event.findById(eventId);
     if (event.gender !== req.user.gender) {
-        req.flash("fail", `You are trying to sign up for a ${event.gender} event as a ${req.user.gender}!`);
+        req.flash("error", `You are trying to sign up for a ${event.gender} event as a ${req.user.gender}!`);
         return res.redirect(`/sportsDays/${id}/events/${eventId}`);
     }
     if (event.participants.includes(req.user._id)) {
-        req.flash("fail", `You have already signed up for ${event.name}!`);
+        req.flash("error", `You have already signed up for ${event.name}!`);
         return res.redirect(`/sportsDays/${id}/events/${eventId}`);
     }
     await event.populate("participants", "house");
     const counted = countByHouse(event.participants);
     if (counted[req.user.house] >= event.limit) {
-        req.flash("fail", `Sorry, the event limit of ${event.limit} students per house has already been reached!`);
+        req.flash("error", `Sorry, the event limit of ${event.limit} students per house has already been reached!`);
         return res.redirect(`/sportsDays/${id}/events/${eventId}`);
     }
     const user = await User.findById(req.user._id);

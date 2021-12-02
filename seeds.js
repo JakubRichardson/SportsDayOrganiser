@@ -71,6 +71,7 @@ const seedDB = async () => {
         const sportsDay = new SportsDay(day);
         for (let event of seedEvents) {
             const newEvent = new Event(event);
+            newEvent.day = sportsDay;
             // for (let user of seedUsers) {
             //     const newUser = new User(user);
             //     await newUser.save();
