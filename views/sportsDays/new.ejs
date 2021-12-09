@@ -43,6 +43,25 @@
                 <div class="row">
                     <div class="row mx-0">
                         <div class="col-md-7 col-lg-5 col-xl-4 p-0">
+                            <button class="btn btn-success me-3 mb-3" type="button" id="allEvents">
+                                Select All Events
+                            </button>
+                            <button class="btn btn-danger me-3 mb-3" type="button" id="unselectEvents">
+                                Unselect All Events
+                            </button>
+                        </div>
+                        <div class="col-md-5 col-lg-7 col-xl-8 p-0 mb-3">
+                            <div class="input-group">
+                                <input class=" form-control" type="number" placeholder="Per House Participant limit"
+                                    min="0" id="allEventsLimit" disabled>
+                                <span class="input-group-text" style="cursor:pointer;">
+                                    <img src="/imgs/cross.svg" alt="">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-md-7 col-lg-5 col-xl-4 p-0">
                             <button class="btn btn-success me-3 mb-3" type="button" id="allEventsMale">
                                 Select All Male
                             </button>
@@ -75,25 +94,6 @@
                                 <input class=" form-control" type="number"
                                     placeholder="Female Per House Participant limit" min="0" id="allEventsLimitFemale"
                                     disabled>
-                                <span class="input-group-text" style="cursor:pointer;">
-                                    <img src="/imgs/cross.svg" alt="">
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mx-0">
-                        <div class="col-md-7 col-lg-5 col-xl-4 p-0">
-                            <button class="btn btn-success me-3 mb-3" type="button" id="allEvents">
-                                Select All Events
-                            </button>
-                            <button class="btn btn-danger me-3 mb-3" type="button" id="unselectEvents">
-                                Unselect All Events
-                            </button>
-                        </div>
-                        <div class="col-md-5 col-lg-7 col-xl-8 p-0 mb-3">
-                            <div class="input-group">
-                                <input class=" form-control" type="number" placeholder="Per House Participant limit"
-                                    min="0" id="allEventsLimit" disabled>
                                 <span class="input-group-text" style="cursor:pointer;">
                                     <img src="/imgs/cross.svg" alt="">
                                 </span>
