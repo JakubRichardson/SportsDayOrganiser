@@ -33,7 +33,7 @@
                         <% if(day.events.length> 0) { %>
                         <p class="card-text mb-1">Events - <%= day.events.length %>: </p>
                         <ul class="list-group list-group-flush">
-                            <% for(let event of day.events) { %>
+                            <% for(let event of day.events.slice(0, 2)) { %>
                             <li
                                 class="list-group-item list-group-item-action d-flex flex-wrap justify-content-between mb-1">
                                 <div class="m-2 m-md-0">
@@ -44,21 +44,30 @@
                                 </div>
                             </li>
                             <% } %>
+                            <% if(day.events.length === 3) { %>
+                            <div>
+                                <span class="badge bg-success rounded-pill">+1 More Event</span>
+                            </div>
+                            <% } else if (day.events.length > 3) { %>
+                            <div>
+                                <span class="badge bg-success rounded-pill">+<%= day.events.length - 2 %> More
+                                    Events</span>
+                            </div>
+                            <% } %>
                         </ul>
                         <% } else { %>
-                        <p class="card-text">No events yet!</p>
+                        <p class="display-6 mt-3 mb-4">No events yet!</p>
                         <% } %>
-                        <!-- <button class="btn btn-primary">Sign up</button> -->
                     </div>
                     <div class="row mt-2">
-                        <div class="col-auto">
+                        <div class="col-auto m-1 m-md-0">
                             <button class="btn btn-primary">View more</button>
                         </div>
                         <% if(signedInUser && signedInUser.teacher===true) { %>
-                        <form class="col-auto" action="/sportsDays/<%= day._id %>/edit">
+                        <form class="col-auto m-1 m-md-0" action="/sportsDays/<%= day._id %>/edit">
                             <button class="btn btn-warning">Edit</button>
                         </form>
-                        <div class="col-auto">
+                        <div class="col-auto m-1 m-md-0">
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal" data-name="<%= day.name %>"
                                 data-submit-to="/sportsDays/<%= day._id %>">

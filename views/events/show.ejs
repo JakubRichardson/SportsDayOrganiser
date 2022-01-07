@@ -112,12 +112,13 @@
 
 <div class="row mb-3">
     <% if(signedInUser && signedInUser.teacher===true) { %>
-    <form class="col-auto" action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE" method="POST">
+    <form class="col-auto m-1 m-md-0" action="/sportsDays/<%= day._id %>/events/<%= event._id %>?_method=DELETE"
+        method="POST">
         <button class="btn btn-danger">Delete Event</button>
     </form>
     <% }%>
 
-    <form class="col-auto" action="/sportsDays/<%= day._id %>">
+    <form class="col-auto m-1 m-md-0" action="/sportsDays/<%= day._id %>">
         <button class="btn btn-primary">Back to <%= day.name %></button>
     </form>
 </div>

@@ -73,7 +73,6 @@ app.get("/", (req, res) => {
     res.redirect("/sportsDays");
 })
 
-
 app.all("*", (req, res, next) => {
     next(new AppError("Page Not Found!", 404));
 })

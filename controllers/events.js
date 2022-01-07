@@ -6,7 +6,8 @@ const countByHouse = require("../utilities/countByHouse");
 module.exports.renderNewEvent = async (req, res) => {
     const { id } = req.params;
     const sportsDay = await SportsDay.findById(id);
-    res.render("events/new", { day: sportsDay });
+    const templates = await TemplateEvent.find({})
+    res.render("events/new", { day: sportsDay, templates });
 }
 
 module.exports.createEvent = async (req, res) => {
@@ -22,6 +23,38 @@ module.exports.createEvent = async (req, res) => {
     await sportsDay.save();
 
     req.flash("success", "Created new event!");
+    res.redirect(`/sportsDays/${sportsDay._id}`);
+}
+
+module.exports.createTemplateEvents = async (req, res) => {
+    const { id } = req.params;
+    const sportsDay = await SportsDay.findById(id);
+    if (req.body.events) {
+        if (req.body.events.male) {
+            for (let templateEvent of req.body.events.male) {
+                const template = await TemplateEvent.findById(templateEvent.id);
+                if (template) {
+                    const newEvent = new Event({ name: template.name, limit: templateEvent.limit, gender: "male" });
+                    newEvent.day = sportsDay;
+                    await newEvent.save(); // doesn't need await
+                    sportsDay.events.push(newEvent);
+                }
+            }
+        }
+        if (req.body.events.female) {
+            for (let templateEvent of req.body.events.female) {
+                const template = await TemplateEvent.findById(templateEvent.id);
+                if (template) { // if template id wrong it won't be used and app won't crash
+                    const newEvent = new Event({ name: template.name, limit: templateEvent.limit, gender: "female" });
+                    newEvent.day = sportsDay;
+                    await newEvent.save(); // doesn't need await
+                    sportsDay.events.push(newEvent);
+                }
+            }
+        }
+        await sportsDay.save();
+    }
+    req.flash("success", "Created new events!");
     res.redirect(`/sportsDays/${sportsDay._id}`);
 }
 
