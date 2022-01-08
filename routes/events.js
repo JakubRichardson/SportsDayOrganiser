@@ -12,7 +12,7 @@ router.post("/", checkLoggedIn, checkTeacher, validateEvent, asyncWrapper(events
 router.post("/templates", checkLoggedIn, checkTeacher, asyncWrapper(events.createTemplateEvents));
 
 router.route("/:eventId")
-    .get(checkLoggedIn, checkYear, events.showEvent)
+    .get(checkLoggedIn, checkYear, asyncWrapper(events.showEvent))
     .delete(checkLoggedIn, checkTeacher, asyncWrapper(events.deleteEvent));
 
 module.exports = router;

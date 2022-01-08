@@ -1,0 +1,72 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="d-flex flex-wrap justify-content-between mb-3">
+    <p class="fs-3 mb-0">User Profile</p>
+    <% if(signedInUser && signedInUser._id.equals(user._id)) { %>
+    <form action="/settings">
+        <button class="btn btn-warning">Edit Profile</button>
+    </form>
+    <% } %>
+</div>
+<ul class="list-group">
+    <li class="list-group-item list-group-item-info" aria-current="true">
+        <div class="row p-2">
+            <div class="col-sm-4">
+                Username
+            </div>
+            <div class="col-sm-8">
+                <%= user.username %>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="row p-2">
+            <div class="col-sm-4">
+                Firstname
+            </div>
+            <div class="col-sm-8">
+                <%= user.name %>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="row p-2">
+            <div class="col-sm-4">
+                Surname
+            </div>
+            <div class="col-sm-8">
+                <%= user.surname %>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="row p-2">
+            <div class="col-sm-4">
+                Year Group
+            </div>
+            <div class="col-sm-8">
+                <%= user.year %>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="row p-2">
+            <div class="col-sm-4">
+                Gender
+            </div>
+            <div class="col-sm-8">
+                <%= user.gender[0].toUpperCase() + user.gender.slice(1) %>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="row p-2">
+            <div class="col-sm-4">
+                House
+            </div>
+            <div class="col-sm-8">
+                <%= user.house[0].toUpperCase() + user.house.slice(1) %>
+            </div>
+        </div>
+    </li>
+</ul>

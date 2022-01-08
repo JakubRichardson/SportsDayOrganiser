@@ -7,6 +7,6 @@ const { checkLoggedIn, hasPermission, checkStudent, checkYear, checkGenderAndNot
 
 router.post("/", checkLoggedIn, checkStudent, checkYear, checkGenderAndNotSignedUp, asyncWrapper(users.signUp));
 
-router.delete("/:userId", checkLoggedIn, hasPermission, asyncWrapper(users.unsignUp))
+router.delete("/:userId", checkLoggedIn, hasPermission, asyncWrapper(users.unsignUp));
 
 module.exports = router;

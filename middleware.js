@@ -27,7 +27,7 @@ module.exports.hasPermission = (req, res, next) => {
     }
     if (!req.user._id.equals(userId)) {
         req.flash("error", "You don't have permission to do that!");
-        return res.redirect(`/sportsDays/${id}/events/${eventId}`);
+        return res.redirect("/sportsDays");
     }
     next();
 }

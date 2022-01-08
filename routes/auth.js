@@ -4,12 +4,12 @@ const auth = require("../controllers/auth");
 
 const passport = require("passport");
 const asyncWrapper = require("../utilities/asyncWrapper");
-const { notLoggedIn, checkLoggedIn, checkStudent } = require("../middleware");
+const { notLoggedIn, checkLoggedIn, checkStudent, hasPermission } = require("../middleware");
 const { validateStudent, validateTeacher, validateStudentNoPass } = require("../validations/validations");
 
 router.get("/settings", checkLoggedIn, auth.renderSettings);
-
 router.get("/signedUpStudent", checkLoggedIn, checkStudent, asyncWrapper(auth.renderStudentEvents));
+router.get("/profiles/:userId", checkLoggedIn, hasPermission, asyncWrapper(auth.renderUser));
 
 router.route("/registerStudent")
     .get(auth.renderRegisterStudent)

@@ -13,6 +13,16 @@ module.exports.renderStudentEvents = async (req, res) => {
     res.render("users/studentEvents", { user })
 }
 
+module.exports.renderUser = async (req, res) => {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    if (user.teacher === true) {
+        req.flash("error", "Sorry, only students have a User Profile");
+        res.redirect("/sportsDays");
+    }
+    res.render("users/profile", { user })
+}
+
 module.exports.renderLogin = (req, res) => {
     res.render("users/login")
 }

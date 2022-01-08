@@ -42,10 +42,15 @@
             <div class="m-2 m-md-0">
                 House: <%= participant.house[0].toUpperCase() + participant.house.slice(1) %>
             </div>
-            <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>/<%= participant._id %>?_method=DELETE"
-                method="POST" class="m-2 m-md-0">
-                <button class="btn btn-danger btn-sm ml-auto">Remove</button>
-            </form>
+            <div class="ml-auto d-flex flex-wrap">
+                <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>/<%= participant._id %>?_method=DELETE"
+                    method="POST" class="m-2 my-md-0">
+                    <button class="btn btn-danger btn-sm">Remove</button>
+                </form>
+                <form action="/profiles/<%= participant._id %>" class=" m-2 my-md-0">
+                    <button class="btn btn-primary btn-sm">View User</button>
+                </form>
+            </div>
         </li>
         <% } %>
     </ul>
