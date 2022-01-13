@@ -53,8 +53,10 @@ module.exports.createTemplateEvents = async (req, res) => {
             }
         }
         await sportsDay.save();
+        req.flash("success", "Created new events!");
+    } else {
+        req.flash("error", "No events selected!");
     }
-    req.flash("success", "Created new events!");
     res.redirect(`/sportsDays/${sportsDay._id}`);
 }
 

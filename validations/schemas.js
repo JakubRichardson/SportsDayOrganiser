@@ -29,14 +29,19 @@ const template = Joi.object({
   limit: Joi.number().empty("").integer().min(0)
 })
 
+const templateEvents = Joi.object({
+  male: Joi.array().items(template),
+  female: Joi.array().items(template)
+})
+module.exports.templateEventsSchema = Joi.object({
+  events: templateEvents
+});
+
 module.exports.sportsDaySchema = Joi.object({
   name: Joi.string().required(),
   year: Joi.number().integer().min(1).max(13).required(),
   date: Joi.date().required(),
-  events: Joi.object({
-    male: Joi.array().items(template),
-    female: Joi.array().items(template)
-  })
+  events: templateEvents
 }).required();
 
 module.exports.eventSchema = Joi.object({

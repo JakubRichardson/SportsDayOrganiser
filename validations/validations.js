@@ -1,4 +1,4 @@
-const { sportsDaySchema, eventSchema, returnToSchema, studentSchema, studentSchemaNoPass, teacherSchema } = require("./schemas.js");
+const { sportsDaySchema, eventSchema, returnToSchema, studentSchema, studentSchemaNoPass, teacherSchema, templateEventsSchema } = require("./schemas.js");
 
 module.exports.validateSportsDay = (req, res, next) => {
     const { error } = sportsDaySchema.validate(req.body);
@@ -12,6 +12,16 @@ module.exports.validateSportsDay = (req, res, next) => {
 
 module.exports.validateEvent = (req, res, next) => {
     const { error } = eventSchema.validate(req.body);
+    if (error) {
+        const text = error.details.map(ind => ind.message).join(", ");
+        throw new AppError(text, 400)
+    } else {
+        next();
+    }
+}
+
+module.exports.validateTemplateEvents = (req, res, next) => {
+    const { error } = templateEventsSchema.validate(req.body);
     if (error) {
         const text = error.details.map(ind => ind.message).join(", ");
         throw new AppError(text, 400)

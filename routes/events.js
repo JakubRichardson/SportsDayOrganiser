@@ -4,12 +4,12 @@ const events = require("../controllers/events");
 const asyncWrapper = require("../utilities/asyncWrapper");
 
 const { checkLoggedIn, checkTeacher, checkYear } = require("../middleware");
-const { validateEvent } = require("../validations/validations");
+const { validateEvent, validateTemplateEvents } = require("../validations/validations");
 
 router.get("/new", checkLoggedIn, checkTeacher, asyncWrapper(events.renderNewEvent));
 
 router.post("/", checkLoggedIn, checkTeacher, validateEvent, asyncWrapper(events.createEvent));
-router.post("/templates", checkLoggedIn, checkTeacher, asyncWrapper(events.createTemplateEvents));
+router.post("/templates", checkLoggedIn, checkTeacher, validateTemplateEvents, events.createTemplateEvents);
 
 router.route("/:eventId")
     .get(checkLoggedIn, checkYear, asyncWrapper(events.showEvent))
