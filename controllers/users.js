@@ -8,7 +8,7 @@ module.exports.signUp = async (req, res) => {
     const event = res.locals.event; // set in checkGenderAndNotSignedUp middleware
     await event.populate("participants", "house");
     const counted = countByHouse(event.participants);
-    if (counted[req.user.house] >= event.limit) {
+    if (event.limit && counted[req.user.house] >= event.limit) {
         req.flash("error", `Sorry, the event limit of ${event.limit} students per house has already been reached!`);
         return res.redirect(`/sportsDays/${id}/events/${eventId}`);
     }

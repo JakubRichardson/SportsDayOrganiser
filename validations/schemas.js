@@ -39,7 +39,7 @@ module.exports.templateEventsSchema = Joi.object({
 
 module.exports.sportsDaySchema = Joi.object({
   name: Joi.string().required(),
-  year: Joi.number().integer().min(1).max(13).required(),
+  year: Joi.number().integer().min(-1).max(13).required(),
   date: Joi.date().required(),
   events: templateEvents
 }).required();

@@ -1,4 +1,5 @@
 const { sportsDaySchema, eventSchema, returnToSchema, studentSchema, studentSchemaNoPass, teacherSchema, templateEventsSchema } = require("./schemas.js");
+const AppError = require("../utilities/AppError");
 
 module.exports.validateSportsDay = (req, res, next) => {
     const { error } = sportsDaySchema.validate(req.body);

@@ -92,3 +92,5 @@ create separate teacher and user show pages
 edit event page
 allow empty participant limit
 only own gender on index
+
+add username and password validation

@@ -10,11 +10,26 @@
         <div class="invalid-feedback">Please choose a title.</div>
     </div>
     <div class="col-md-6 mb-3">
-        <label class="form-label" for="year">Year Group (1 to 13)</label>
-        <input class="form-control" type="number" name="year" id="year" placeholder="Year Group" min="1" max="13"
-            value="<%= day.year %>" required>
+        <label class="form-label" for="year">Year group</label>
+        <select name="year" id="year" class="form-select form-select-md" aria-label=".form-select-sm example" required>
+            <option value="-1" <%=(day.year===-1 ) ? "selected" : "" %>>Pre-nursery</option>
+            <option value="0" <%=(day.year===0 ) ? "selected" : "" %>>Nursery</option>
+            <option value="1" <%=(day.year===1 ) ? "selected" : "" %>>Year 1</option>
+            <option value="2" <%=(day.year===2 ) ? "selected" : "" %>>Year 2</option>
+            <option value="3" <%=(day.year===3 ) ? "selected" : "" %>>Year 3</option>
+            <option value="4" <%=(day.year===4 ) ? "selected" : "" %>>Year 4</option>
+            <option value="5" <%=(day.year===5 ) ? "selected" : "" %>>Year 5</option>
+            <option value="6" <%=(day.year===6 ) ? "selected" : "" %>>Year 6</option>
+            <option value="7" <%=(day.year===7 ) ? "selected" : "" %>>Year 7</option>
+            <option value="8" <%=(day.year===8 ) ? "selected" : "" %>>Year 8</option>
+            <option value="9" <%=(day.year===9 ) ? "selected" : "" %>>Year 9</option>
+            <option value="10" <%=(day.year===10 ) ? "selected" : "" %>>Year 10</option>
+            <option value="11" <%=(day.year===11 ) ? "selected" : "" %>>Year 11</option>
+            <option value="12" <%=(day.year===12 ) ? "selected" : "" %>>Year 12</option>
+            <option value="13" <%=(day.year===-13 ) ? "selected" : "" %>>Year 13</option>
+        </select>
         <div class="valid-feedback">All Good!</div>
-        <div class="invalid-feedback">Please choose an integer year group between 1 and 13.</div>
+        <div class="invalid-feedback">Please choose a year group</div>
     </div>
     <div class="col-md-6 mb-3">
         <label class="form-label" for="date">Date</label>

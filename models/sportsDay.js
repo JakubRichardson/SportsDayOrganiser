@@ -10,7 +10,7 @@ const SportsDaySchema = new Schema({
     year: {
         type: Number,
         max: 13,
-        min: 1,
+        min: -1,
         required: true
     },
     date: {
@@ -24,6 +24,15 @@ const SportsDaySchema = new Schema({
         }
     ]
 })
+
+SportsDaySchema.virtual('yearString').get(function () {
+    if (this.year === 0) {
+        return "Nursery";
+    } else if (this.year === -1) {
+        return "Pre-nursery";
+    }
+    return this.year;
+});
 
 SportsDaySchema.post("findOneAndDelete", async function (document) {
     if (document) {

@@ -81,7 +81,7 @@
         <% } %>
     </ul>
     <% } else { %>
-    <% const limit = event.limit ? event.limit: Infinity; if(counted[signedInUser.house] < limit) { %>
+    <% if(!event.limit || counted[signedInUser.house] < event.limit) { %>
     <ul class="list-group mb-2">
         <li class="list-group-item list-group-item-primary d-flex flex-wrap justify-content-between mb-1">
             <div class="m-2 m-md-0">
@@ -107,7 +107,7 @@
 <form action="/sportsDays/<%= day._id %>/events/<%= event._id %>" method="POST">
     <div class="mb-3">
         <button class="btn btn-success"
-            <%=(event.participants.length> 0 || counted[signedInUser.house] >= event.limit) ? "disabled" : null %>>Sign
+            <%=(event.participants.length> 0 || (event.limit && counted[signedInUser.house] >= event.limit)) ? "disabled" : null %>>Sign
             Up</button>
     </div>
 </form>
