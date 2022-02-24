@@ -1,3 +1,12 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
+if (!process.env.MASTERPASS) {
+    console.log("Please setup admin password using setup.js file");
+    process.exit();
+}
+
 const express = require("express");
 const app = express();
 const path = require("path");
