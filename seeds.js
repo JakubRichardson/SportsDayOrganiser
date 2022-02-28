@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const SportsDay = require("./models/sportsDay");
 const Event = require("./models/event");
 const TemplateEvent = require("./models/tempEvent");
-const User = require("./models/user")
 
 mongoose.connect("mongodb://localhost:27017/sportsApp", {
     useNewUrlParser: true,
