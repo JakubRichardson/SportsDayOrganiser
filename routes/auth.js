@@ -4,7 +4,7 @@ const auth = require("../controllers/auth");
 
 const passport = require("passport");
 const asyncWrapper = require("../utilities/asyncWrapper");
-const { notLoggedIn, checkLoggedIn, checkStudent, hasPermission } = require("../middleware");
+const { notLoggedIn, checkLoggedIn, checkStudent, hasPermission, checkMasterPassword, checkUsernameAvailable } = require("../middleware");
 const { validateStudent, validateTeacher, validateStudentNoPass } = require("../validations/validations");
 
 router.get("/settings", checkLoggedIn, auth.renderSettings);
@@ -13,11 +13,11 @@ router.get("/profiles/:userId", checkLoggedIn, hasPermission, asyncWrapper(auth.
 
 router.route("/registerStudent")
     .get(auth.renderRegisterStudent)
-    .post(validateStudent, asyncWrapper(auth.registerStudent));
+    .post(validateStudent, checkUsernameAvailable, asyncWrapper(auth.registerStudent));
 
 router.route("/registerTeacher")
     .get(auth.renderRegisterTeacher)
-    .post(validateTeacher, asyncWrapper(auth.registerTeacher));
+    .post(validateTeacher, checkMasterPassword, checkUsernameAvailable, auth.registerTeacher);
 
 router.route("/login")
     .get(notLoggedIn, auth.renderLogin)

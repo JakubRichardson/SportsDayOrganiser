@@ -2,6 +2,7 @@ const asyncWrapper = require("./utilities/asyncWrapper");
 const SportsDay = require("./models/sportsDay");
 const Event = require("./models/event");
 const User = require("./models/user");
+const bcrypt = require("bcrypt");
 const AppError = require("./utilities/AppError");
 
 module.exports.notLoggedIn = (req, res, next) => {
@@ -49,6 +50,31 @@ module.exports.checkTeacher = (req, res, next) => {
         return res.redirect(`/sportsDays`);
     }
 };
+
+const verifyMasterPass = async (pass, hash) => {
+    const status = await bcrypt.compare(pass, hash);
+    return status;
+}
+
+module.exports.checkMasterPassword = async (req, res, next) => {
+    const { masterPassword } = req.body;
+    const passCorrect = await verifyMasterPass(masterPassword, process.env.MASTERPASS);
+    if (!passCorrect) {
+        req.flash("error", "Incorrect admin password!");
+        return res.redirect("/registerTeacher");
+    }
+    next();
+};
+
+module.exports.checkUsernameAvailable = asyncWrapper(async (req, res, next) => {
+    const { username } = req.body;
+    const userExists = await User.findOne({ username });
+    if (userExists) {
+        req.flash("error", "Sorry, that username is taken!");
+        return res.redirect("/registerTeacher");
+    }
+    next();
+});
 
 module.exports.checkYear = asyncWrapper(async (req, res, next) => {
     const { id } = req.params;

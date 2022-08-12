@@ -71,7 +71,7 @@ const seedDB = async () => {
         await sportsDay.save();
     }
     await TemplateEvent.deleteMany({});
-    TemplateEvent.insertMany(templateEvents);
+    await TemplateEvent.insertMany(templateEvents);
 }
 
 seedDB().then(() => {

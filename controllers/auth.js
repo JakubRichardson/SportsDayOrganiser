@@ -1,6 +1,5 @@
 const User = require("../models/user");
 const Event = require("../models/event");
-const bcrypt = require("bcrypt");
 
 module.exports.renderSettings = (req, res) => {
     res.render("users/settings")
@@ -65,18 +64,8 @@ module.exports.renderRegisterTeacher = (req, res) => {
     res.render("users/registerTeacher")
 }
 
-const login = async (pass, hash) => {
-    const status = await bcrypt.compare(pass, hash);
-    return status;
-}
-
 module.exports.registerTeacher = async (req, res) => {
-    const { username, password, masterPassword } = req.body;
-    const passCorrect = await login(masterPassword, process.env.MASTERPASS);
-    if (!passCorrect) {
-        req.flash("error", "Incorrect admin password");
-        return res.redirect("/registerTeacher");
-    }
+    const { username, password } = req.body;
     const user = new User({ username, teacher: true });
     const registeredUser = await User.register(user, password);
 
