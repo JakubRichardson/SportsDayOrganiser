@@ -9,8 +9,8 @@ The project was built as an individual school project in consultation with a use
 ## 📝 Table of Contents
 
 - [📝 Table of Contents](#-table-of-contents)
-- [📔 Design Sketches <a name = "design"></a>](#-design-)
-- [🖼️ Project Images <a name = "project_images"></a>](#-project-images-)
+- [📔 Design Sketches <a name = "design_sketches"></a>](#-design-sketches-)
+- [🖼️ Project Images & Walkthrough video <a name = "project_images"></a>](#-project-images-)
 - [🚀 Future Scope <a name = "future_scope"></a>](#-future-scope-)
 - [🏁 Getting Started <a name = "getting_started"></a>](#-getting-started-)
   - [Prerequisites <a name = "prerequisites"></a>](#prerequisites-)
@@ -18,7 +18,7 @@ The project was built as an individual school project in consultation with a use
 - [⛏️ Built With <a name = "tech_stack"></a>](#️-built-with-)
 - [✍️ Author <a name = "author"></a>](#️-author-)
 
-## 📔 Design Sketches <a name = "design"></a>
+## 📔 Design Sketches <a name = "design_sketches"></a>
 
 <p align="center"><img src="./images/Index.png" alt="Design sketch image 1" width="600"/></p>
 <p>Home page (logged in as admin user)</p>
@@ -47,9 +47,9 @@ The project was built as an individual school project in consultation with a use
 <p>Application database relationship diagram</p>
 </details>
 
-## 🖼️ Project Images <a name = "project_images"></a>
+## 🖼️ Project Images & Walkthrough video <a name = "project_images"></a>
 
-Hello
+A project overview/walkthrough video is available on youtube: 
 
 ## 🚀 Future Scope <a name = "future_scope"></a>
 
