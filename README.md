@@ -4,12 +4,13 @@
 
 A comprehensive web application built for organising and signing up for sports days.
 
-The project was built as an individual school project in consultation with a user. A comprehensive design document with design sketches, rationale and much more was made during the build process.
+The project was built as an individual school project in consultation with a user. A comprehensive design document with design sketches, rationale and much more was made during the build process (synthesised in this README).
 
 ## 📝 Table of Contents
 
 - [📝 Table of Contents](#-table-of-contents)
-<!-- - [🖼️ Project Images <a name = "project_images"></a>](#-project-images-) -->
+- [📔 Design Sketches <a name = "design"></a>](#-design-)
+- [🖼️ Project Images <a name = "project_images"></a>](#-project-images-)
 - [🚀 Future Scope <a name = "future_scope"></a>](#-future-scope-)
 - [🏁 Getting Started <a name = "getting_started"></a>](#-getting-started-)
   - [Prerequisites <a name = "prerequisites"></a>](#prerequisites-)
@@ -17,21 +18,38 @@ The project was built as an individual school project in consultation with a use
 - [⛏️ Built With <a name = "tech_stack"></a>](#️-built-with-)
 - [✍️ Author <a name = "author"></a>](#️-author-)
 
-<!-- ## 🖼️ Project Images <a name = "project_images"></a>
+## 📔 Design Sketches <a name = "design"></a>
 
-<p align="center">
-  <img src="./images/pomodoro1.PNG" alt="Pomodoro timer image 1" width="600"/>
-</p>
+<p align="center"><img src="./images/Index.png" alt="Design sketch image 1" width="600"/></p>
+<p>Home page (logged in as admin user)</p>
 
 <details>
 <summary>See More Images</summary>
-<br/>
-<p align="center">
-  <img src="./images/pomodoro2.PNG" alt="Pomodoro timer image 2" width="600"/>
-  <img src="./images/pomodoro3.PNG" alt="Pomodoro timer image 3" width="600"/>
-  <img src="./images/pomodoro4.PNG" alt="Pomodoro timer image 4" width="600"/>
+<br>
+<p align="center"><img src="./images/IndexStudent.png" alt="Design sketch image 2" width="600"/></p>
+<p>Home page (not logged in)</p>
+<p align="center"><img src="./images/ShowOld.png" alt="Design sketch image 3" width="600"/></p>
+<p>Original sports day show page design</p>
+<p align="center"><img src="./images/Show.png" alt="Design sketch image 4" width="600"/></p>
+<p>Final sports day show page design (logged in as admin user)<br>After user consultation, legal GDPR requirements of only showing students their own data, as well as displaying and enforcing participant limits per house were brought to my attention, prompting changes in design
 </p>
-</details> -->
+<p align="center"><img src="./images/New.png" alt="Design sketch image 5" width="600"/></p>
+<p>Original new sports day page design (only accessible by admin)</p>
+<p align="center"><img src="./images/NewCards.png" alt="Design sketch image 6" width="600"/></p>
+<p>Final new sports day page design (only accessible by admin)<br>Based upon user feedback, suggesting that the app may be used on small screen sizes, the table layout was redesigned into a more responsive card layout</p>
+<p align="center"><img src="./images/EventShowOld.png" alt="Design sketch image 7" width="600"/></p>
+<p>Original event show page design</p>
+<p align="center"><img src="./images/EventShow.png" alt="Design sketch image 8" width="600"/></p>
+<p>Final event show page design (logged in as admin user)</p>
+<p align="center"><img src="./images/EventShowStudent.png" alt="Design sketch image 9" width="600"/></p>
+<p>Final event show page design (logged in as student)<br>The initial design proposed a login system only for admin users for permission purposes, however after legal requirements were considered, a login system for both students and teachers was designed</p>
+<p align="center"><img src="./images/EntityRelationship.png" alt="Design sketch image 10" width="600"/></p>
+<p>Application database relationship diagram</p>
+</details>
+
+## 🖼️ Project Images <a name = "project_images"></a>
+
+Hello
 
 ## 🚀 Future Scope <a name = "future_scope"></a>
 
