@@ -19,7 +19,7 @@ The project was built as an individual school project in consultation with a use
 - [✍️ Author <a name = "author"></a>](#️-author-)
 
 ## 📔 Design Sketches <a name = "design_sketches"></a>
-
+My user interface design sketches were created using figma, a popular website for creating web and desktop app design sketches.
 <p align="center"><img src="./images/Index.png" alt="Design sketch image 1" width="600"/></p>
 <p>Home page (logged in as admin user)</p>
 
@@ -49,7 +49,7 @@ The project was built as an individual school project in consultation with a use
 
 ## 🖼️ Project Images & Walkthrough video <a name = "project_images"></a>
 
-A project overview/walkthrough video is available on youtube: 
+Project overview/walkthrough video: 
 
 ## 🚀 Future Scope <a name = "future_scope"></a>
 
@@ -78,6 +78,7 @@ You must first set up a master password using:
 ```
 node setup.js
 ```
+This creates a hidden .env file, which stores the master password hashed and salted. 
 To run the website you need to run the server using node:
 
 ```
