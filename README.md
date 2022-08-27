@@ -49,7 +49,9 @@ My user interface design sketches were created using figma, a popular website fo
 
 ## 🖼️ Project Images & Walkthrough video <a name = "project_images"></a>
 
-Project overview/walkthrough video: 
+Project overview/walkthrough video:
+
+https://user-images.githubusercontent.com/81182728/187048148-d8939812-b0c6-4056-8c01-ebbcb081419b.mp4
 
 ## 🚀 Future Scope <a name = "future_scope"></a>
 
