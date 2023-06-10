@@ -33,7 +33,7 @@ My user interface design sketches were created using figma, a popular website fo
 <p>Application database relationship diagram</p>
 </details>
 
-## 🖼️ Project Images & Walkthrough video"></a>
+## 🖼️ Project Images & Walkthrough video
 
 Project overview/walkthrough video:
 
