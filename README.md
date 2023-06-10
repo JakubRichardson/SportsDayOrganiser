@@ -1,24 +1,10 @@
-<p>
-  <h1 align="center">Sports day organiser</h1>
-</p>
+# Sports day organiser
 
 A comprehensive web application built for organising and signing up for sports days.
 
 The project was built as an individual school project in consultation with a user. A comprehensive design document with design sketches, rationale and much more was made during the build process (synthesised in this README).
 
-## 📝 Table of Contents
-
-- [📝 Table of Contents](#-table-of-contents)
-- [📔 Design Sketches <a name = "design_sketches"></a>](#-design-sketches-)
-- [🖼️ Project Images & Walkthrough video <a name = "project_images"></a>](#-project-images-)
-- [🚀 Future Scope <a name = "future_scope"></a>](#-future-scope-)
-- [🏁 Getting Started <a name = "getting_started"></a>](#-getting-started-)
-  - [Prerequisites <a name = "prerequisites"></a>](#prerequisites-)
-  - [Running the project <a name = "running"></a>](#running-the-project-)
-- [⛏️ Built With <a name = "tech_stack"></a>](#️-built-with-)
-- [✍️ Author <a name = "author"></a>](#️-author-)
-
-## 📔 Design Sketches <a name = "design_sketches"></a>
+## 📔 Design Sketches
 My user interface design sketches were created using figma, a popular website for creating web and desktop app design sketches.
 <p align="center"><img src="./images/Index.png" alt="Design sketch image 1" width="600"/></p>
 <p>Home page (logged in as admin user)</p>
@@ -47,13 +33,13 @@ My user interface design sketches were created using figma, a popular website fo
 <p>Application database relationship diagram</p>
 </details>
 
-## 🖼️ Project Images & Walkthrough video <a name = "project_images"></a>
+## 🖼️ Project Images & Walkthrough video"></a>
 
 Project overview/walkthrough video:
 
 https://user-images.githubusercontent.com/81182728/187048148-d8939812-b0c6-4056-8c01-ebbcb081419b.mp4
 
-## 🚀 Future Scope <a name = "future_scope"></a>
+## 🚀 Future Scope
 
 I may decide to add some of the following features in the future:
 - ℹ️ Application home page with explanation of the application functionality as well as contact details could be added
@@ -61,11 +47,11 @@ I may decide to add some of the following features in the future:
 - ⏱️ Scoring of sports day events
 - 🎨 Alternative color schemes
 
-## 🏁 Getting Started <a name = "getting_started"></a>
+## 🏁 Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Prerequisites <a name = "prerequisites"></a>
+### Prerequisites
 
 You must have node, npm, MongoDB and a browser downloaded. To be able to run the website, first you need to install the required dependencies with:
 
@@ -73,7 +59,7 @@ You must have node, npm, MongoDB and a browser downloaded. To be able to run the
 npm install 
 ```
 
-### Running the project <a name = "running"></a>
+### Running the project
 
 You must first set up a master password using: 
 
@@ -98,7 +84,7 @@ node seeds.js
 ```
 
 
-## ⛏️ Built With <a name = "tech_stack"></a>
+## ⛏️ Built With
 
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) - Programming language
 - [NodeJS](https://nodejs.org/en/) - JS runtime environment
@@ -113,6 +99,6 @@ node seeds.js
 - [Bcrypt](https://www.npmjs.com/package/bcrypt) - Password hashing library
 - [Dotenv](https://www.npmjs.com/package/dotenv) - Loads environment variables for Node.js
 
-## ✍️ Author <a name = "author"></a>
+## ✍️ Author
 
 - [JakubRichardson](https://github.com/JakubRichardson)
