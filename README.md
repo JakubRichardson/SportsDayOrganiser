@@ -7,30 +7,49 @@ The project was built as an individual school project in consultation with a use
 ## 📔 Design Sketches
 My user interface design sketches were created using figma, a popular website for creating web and desktop app design sketches.
 <p align="center"><img src="./images/Index.png" alt="Design sketch image 1" width="600"/></p>
-<p>Home page (logged in as admin user)</p>
+Home page (logged in as admin user)
 
 <details>
 <summary>See More Images</summary>
-<br>
+
 <p align="center"><img src="./images/IndexStudent.png" alt="Design sketch image 2" width="600"/></p>
-<p>Home page (not logged in)</p>
+
+Home page (not logged in)
+
 <p align="center"><img src="./images/ShowOld.png" alt="Design sketch image 3" width="600"/></p>
-<p>Original sports day show page design</p>
+
+Original sports day show page design
+
 <p align="center"><img src="./images/Show.png" alt="Design sketch image 4" width="600"/></p>
-<p>Final sports day show page design (logged in as admin user)<br>After user consultation, legal GDPR requirements of only showing students their own data, as well as displaying and enforcing participant limits per house were brought to my attention, prompting changes in design
-</p>
+
+Final sports day show page design (logged in as admin user)<br>After user consultation, legal GDPR requirements of only showing students their own data, as well as displaying and enforcing participant limits per house were brought to my attention, prompting changes in design
+
 <p align="center"><img src="./images/New.png" alt="Design sketch image 5" width="600"/></p>
-<p>Original new sports day page design (only accessible by admin)</p>
+
+Original new sports day page design (only accessible by admin)
+
 <p align="center"><img src="./images/NewCards.png" alt="Design sketch image 6" width="600"/></p>
-<p>Final new sports day page design (only accessible by admin)<br>Based upon user feedback, suggesting that the app may be used on small screen sizes, the table layout was redesigned into a more responsive card layout</p>
+
+Final new sports day page design (only accessible by admin)<br>Based upon user feedback, suggesting that the app may be used on small screen sizes, the table layout was redesigned into a more responsive card layout
+
 <p align="center"><img src="./images/EventShowOld.png" alt="Design sketch image 7" width="600"/></p>
-<p>Original event show page design</p>
+
+Original event show page design
+
 <p align="center"><img src="./images/EventShow.png" alt="Design sketch image 8" width="600"/></p>
-<p>Final event show page design (logged in as admin user)</p>
+
+Final event show page design (logged in as admin user)
+
 <p align="center"><img src="./images/EventShowStudent.png" alt="Design sketch image 9" width="600"/></p>
-<p>Final event show page design (logged in as student)<br>The initial design proposed a login system only for admin users for permission purposes, however after legal requirements were considered, a login system for both students and teachers was designed</p>
+
+Final event show page design (logged in as student)
+
+The initial design proposed a login system only for admin users for permission purposes, however after legal requirements were considered, a login system for both students and teachers was designed
+
 <p align="center"><img src="./images/EntityRelationship.png" alt="Design sketch image 10" width="600"/></p>
-<p>Application database relationship diagram</p>
+
+Application database relationship diagram
+
 </details>
 
 ## 🖼️ Project Images & Walkthrough video
